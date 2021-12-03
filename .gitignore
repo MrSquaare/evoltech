@@ -1,0 +1,8 @@
+# Snyk
+.dccache
+
+# Jetbrains
+.idea/
+
+# Visual Studio Code
+.vscode/
