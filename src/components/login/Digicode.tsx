@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Paper } from "@mui/material";
 import React, { Dispatch, FunctionComponent, SetStateAction } from "react";
 
@@ -27,7 +27,7 @@ const Case: FunctionComponent<{
   onClick: Dispatch<SetStateAction<string>>;
 }> = ({ children, onClick }) => {
   return (
-    <Paper
+    <Button
       onClick={() =>
         onClick((prev) => {
           if (prev.length < 4) {
@@ -36,7 +36,6 @@ const Case: FunctionComponent<{
           return prev;
         })
       }
-      elevation={0}
       sx={{
         backgroundColor: "#2E4C6D",
         display: "flex",
@@ -48,10 +47,14 @@ const Case: FunctionComponent<{
         margin: "13px",
         color: "white",
         fontSize: "26px",
+        ":hover": {
+          backgroundColor: "#2E4C6D",
+        },
       }}
+      variant="contained"
     >
       {children}
-    </Paper>
+    </Button>
   );
 };
 
