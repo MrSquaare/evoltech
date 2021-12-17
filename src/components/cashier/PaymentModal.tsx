@@ -16,12 +16,20 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
   return (
     <Box
       sx={{
-        backgroundColor: "cyan",
-        marginLeft: "35vw",
-        width: "600px",
+        border: 2,
+        borderRadius: "20px",
+        marginLeft: "30vw",
+        width: "800px",
+        padding: "30px",
       }}
     >
-      <Typography>Sélectionnez un ou des moyens de paiement</Typography>
+      <Typography
+        sx={{
+          padding: "20px",
+        }}
+      >
+        Sélectionnez un ou des moyens de paiement
+      </Typography>
       <Box
         sx={{
           backgroundColor: "white",
@@ -29,14 +37,36 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           alignItems: "center",
         }}
       >
-        <Box>
-          <img src={cb} width="200px" height="100px" />
+        <Box
+          sx={{
+            padding: "50px",
+          }}
+        >
+          <Button
+            onClick={() => {
+              alert("CB sélectionné pour le paiement");
+            }}
+          >
+            <img src={cb} width="200px" height="100px" />
+          </Button>
         </Box>
         <Box>
-          <img src={cash} width="200px" height="100px" />
+          <Button
+            onClick={() => {
+              alert("Espèces  sélectionné pour le paiement");
+            }}
+          >
+            <img src={cash} width="200px" height="100px" />
+          </Button>
         </Box>
         <Box>
-          <img src={chec} width="200px" height="100px" />
+          <Button
+            onClick={() => {
+              alert("Chèque sélectionné pour le paiement");
+            }}
+          >
+            <img src={chec} width="200px" height="100px" />
+          </Button>
         </Box>
       </Box>
       <Box>
