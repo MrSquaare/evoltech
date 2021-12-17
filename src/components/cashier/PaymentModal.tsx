@@ -40,30 +40,49 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
         </Box>
       </Box>
       <Box>
-        <Button>Payer une partie</Button>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{
+            background: "#BBBBBB",
+            boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
+            borderRadius: "10px",
+          }}
+        >
+          Payer une partie
+        </Button>
       </Box>
       <Box>
         <Button
+          variant="contained"
+          size="large"
           sx={{
             backgroundColor: "#2E4C6D",
             color: "white",
+            boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
+            borderRadius: "10px",
           }}
         >
           Retour
         </Button>
         <Button
+          size="large"
           sx={{
             backgroundColor: "white",
             color: "#2E4C6D",
+            boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
+            borderRadius: "10px",
           }}
         >
           à payer : {price}
         </Button>
-        <Button> Payer une partie</Button>
         <Button
+          variant="contained"
+          color="success"
+          size="large"
           sx={{
-            backgroundColor: "#2BA84A",
-            color: "white",
+            boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
+            borderRadius: "10px",
           }}
         >
           Payer
