@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-import PayementPanel from "../components/cashier/PayementPanel";
+import WaitingPanel from "../components/cashier/WaitingPanel";
 
 interface OwnProps {}
 
@@ -9,7 +9,7 @@ type Props = OwnProps;
 const Cashier: FunctionComponent<Props> = (props) => {
   return (
     <>
-      <PayementPanel />
+      <WaitingPanel />
     </>
   );
 };
