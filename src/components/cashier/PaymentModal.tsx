@@ -74,6 +74,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           variant="contained"
           size="large"
           sx={{
+            marginLeft: "69%",
             background: "#BBBBBB",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
             borderRadius: "10px",
@@ -82,11 +83,16 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           Payer une partie
         </Button>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          textAlign: "center",
+        }}
+      >
         <Button
           variant="contained"
           size="large"
           sx={{
+            margin: "5%",
             backgroundColor: "#2E4C6D",
             color: "white",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
@@ -98,6 +104,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
         <Button
           size="large"
           sx={{
+            margin: "5%",
             backgroundColor: "white",
             color: "#2E4C6D",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
@@ -111,6 +118,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           color="success"
           size="large"
           sx={{
+            margin: "5%",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
             borderRadius: "10px",
           }}
