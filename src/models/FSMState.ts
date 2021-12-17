@@ -1,18 +1,18 @@
-export class State {
-  private constructor(private _type: State.Type) {}
+export class FSMState {
+  private constructor(private _type: FSMState.Type) {}
 
-  private static _instances: Map<string, State> = new Map();
+  private static _instances: Map<string, FSMState> = new Map();
 
-  static get(type: State.Type): State {
+  static get(type: FSMState.Type): FSMState {
     if (!this._instances.has(type)) {
-      this._instances.set(type, new State(type));
+      this._instances.set(type, new FSMState(type));
     }
 
-    return this._instances.get(type) as State;
+    return this._instances.get(type) as FSMState;
   }
 }
 
-export namespace State {
+export namespace FSMState {
   export const enum Type {
     WAIT_PRODUCT_SCAN = "WAIT_PRODUCT_SCAN",
     WAIT_PRODUCT_CODE = "WAIT_PRODUCT_CODE",

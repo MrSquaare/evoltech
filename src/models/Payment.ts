@@ -1,8 +1,7 @@
 export class Payment {
+  constructor(private _price: number) {}
 
-    constructor(private _price: number){}
-
-    get price() {
-        return this._price;
-    }
+  get price() {
+    return this._price;
+  }
 }
