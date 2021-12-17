@@ -25,7 +25,12 @@ const Digicode: FunctionComponent<Props> = (props) => {
 
 const Case: FunctionComponent<{ onClick: Dispatch<SetStateAction<string>> }> = ({children, onClick}) => {
     return (
-        <Paper onClick={() => onClick(prev => prev + children as string)} elevation={0}
+        <Paper onClick={() => onClick(prev => {
+            if (prev.length < 4) {
+                return prev + children as string
+            }
+            return prev
+        })} elevation={0}
                sx={{
                    backgroundColor: "#2E4C6D",
                    display: "flex",

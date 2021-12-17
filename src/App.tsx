@@ -4,7 +4,7 @@ import Cashier from "./pages/Cashier";
 import Login from "./pages/Login";
 
 function App() {
-    return(
+    return (
         <>
             <Cashier/>
         </>);
