@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 
 import PayementPanel from "../components/cashier/PayementPanel";
 import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
+import ProductCodePanel from "../components/cashier/ProductCodePanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
@@ -15,6 +16,7 @@ const Cashier: FunctionComponent<Props> = (props) => {
       <TopBar cashier={cashier} />
       <ProductCardPanel />
       <PayementPanel />
+      <ProductCodePanel />
     </>
   );
 };
