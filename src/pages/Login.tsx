@@ -1,6 +1,7 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { Box, Container, Paper } from "@mui/material";
 import React, { FunctionComponent, useCallback, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
+
 import Digicode from "../components/login/Digicode";
 
 type Props = {};
