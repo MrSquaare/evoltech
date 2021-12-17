@@ -6,7 +6,7 @@ import Digicode from "../components/login/Digicode";
 
 type Props = {};
 
-const Login: FunctionComponent<Props> = (props) => {
+const LoginPage: FunctionComponent<Props> = (props) => {
   const [code, setCode] = useState<string>("");
   const handleSubmit = useCallback(() => {}, []);
 
@@ -33,4 +33,4 @@ const Login: FunctionComponent<Props> = (props) => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,6 +1,10 @@
 export class FSMState {
   private constructor(private _type: FSMState.Type) {}
 
+  get type() {
+    return this._type;
+  }
+
   private static _instances: Map<string, FSMState> = new Map();
 
   static get(type: FSMState.Type): FSMState {
