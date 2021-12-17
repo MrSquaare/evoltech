@@ -2,34 +2,33 @@ import { Cashier } from "../models/Cashier";
 import { Product } from "../models/Product";
 import { ProductCard } from "../models/ProductCard";
 
-const product0 = new Product(
-  "0",
-  "Product 0",
-  "Description of Product 0",
-  "1234",
-  10
-);
-const product1 = new Product(
-  "1",
-  "Product 1",
-  "Description of Product 1",
-  "5678",
-  10
-);
-const product2 = new Product(
-  "2",
-  "Product 2",
-  "Description of Product 2",
-  "4321",
-  10
-);
+const generateProducts = (quantity: number): Product[] => {
+  return Array(quantity)
+    .fill(null)
+    .map((_, index) => {
+      return new Product(
+        `${index}`,
+        `Product ${index}`,
+        `Description of Product ${index}`,
+        `${index}`,
+        index
+      );
+    });
+};
 
-export const products = [product0, product1, product2];
+const generateProductCards = (
+  products: Product[],
+  quantity: number
+): ProductCard[] => {
+  return Array(quantity)
+    .fill(null)
+    .map((_, index) => {
+      return new ProductCard(products[index], index);
+    });
+};
 
-const productCard0 = new ProductCard(product0, 1);
-const productCard1 = new ProductCard(product1, 1);
-const productCard2 = new ProductCard(product2, 1);
+export const products = generateProducts(8);
 
-export const productCards = [productCard0, productCard1, productCard2];
+export const productCards = generateProductCards(products, 8);
 
 export const cashier = new Cashier("John", "Doe");
