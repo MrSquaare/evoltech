@@ -1,19 +1,17 @@
-import React, {FunctionComponent} from 'react';
-import TopBar from '../components/cashier/TopBar';
+import React, { FunctionComponent } from "react";
+
 import PayementPanel from "../components/cashier/PayementPanel";
 
-interface OwnProps {
-}
+interface OwnProps {}
 
 type Props = OwnProps;
 
 const Cashier: FunctionComponent<Props> = (props) => {
-
-    return (
-        <>
-            <PayementPanel/>
-        </>
-    );
+  return (
+    <>
+      <PayementPanel />
+    </>
+  );
 };
 
 export default Cashier;
