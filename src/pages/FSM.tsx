@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { FSM } from "../fsm/FSM";
 import { useFSM } from "../hooks/useFSM";
 import { FSMEvent } from "../models/FSMEvent";
@@ -7,10 +9,14 @@ const fsm = new FSM(FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN));
 
 export const FSMPage = () => {
   const { state, send } = useFSM(fsm);
+  const [states, setStates] = useState<FSMState[]>([]);
+
+  useEffect(() => {
+    setStates((states) => [...states, state]);
+  }, [state]);
 
   return (
     <div>
-      <div>State: {state.type}</div>
       <div>
         Events:
         <button
@@ -41,6 +47,13 @@ export const FSMPage = () => {
         >
           Quantity updated
         </button>
+      </div>
+      <div>Current state: {state.type}</div>
+      <div>
+        States:{" "}
+        {states.map((state, index) => (
+          <div key={index}>{state.type}</div>
+        ))}
       </div>
     </div>
   );
