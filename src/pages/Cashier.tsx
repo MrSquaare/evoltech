@@ -1,55 +1,13 @@
-import { Box, Button, Typography } from "@mui/material";
-import React, { FunctionComponent } from "react";
+import { Box } from "@mui/material";
+import React, { FC } from "react";
 
+import { ActionsPanel } from "../components/cashier/ActionsPanel";
 import PayementPanel from "../components/cashier/PayementPanel";
 import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
-interface OwnProps {}
-
-type Props = OwnProps;
-
-const ActionsPanel: FunctionComponent = () => {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <Button
-        variant="outlined"
-        size="large"
-        sx={{
-          backgroundColor: "#FF7438",
-          borderColor: "#FF7438",
-          ":hover": { backgroundColor: "#FF7438", borderColor: "#FF7438" },
-        }}
-      >
-        <Typography variant="h6" component="span" color="white">
-          Mise en attente
-        </Typography>
-      </Button>
-      <Button
-        variant="outlined"
-        size="large"
-        sx={{
-          backgroundColor: "#EE5F5F",
-          borderColor: "#EE5F5F",
-          ":hover": { backgroundColor: "#EE5F5F", borderColor: "#EE5F5F" },
-        }}
-      >
-        <Typography variant="h6" component="span" color="white">
-          Abandonner
-        </Typography>
-      </Button>
-    </Box>
-  );
-};
-
-const Cashier: FunctionComponent<Props> = (props) => {
+const Cashier: FC = (props) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <TopBar cashier={cashier} />
