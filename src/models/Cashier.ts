@@ -1,33 +1,11 @@
-import { Order } from "./Order";
-import { Payment } from "./Payment";
-
 export class Cashier {
-  private _orders: Order[] = new Array<Order>(2);
-  private _currentOrderId: number = 0;
+  constructor(private _firstName: string, private _lastName: string) {}
 
-  get currentOrder() {
-    return this._orders[this._currentOrderId];
+  get firstName(): string {
+    return this._firstName;
   }
 
-  pauseOrder() {
-    this._currentOrderId = 1;
-  }
-
-  resumeOrder() {
-    this._currentOrderId = 0;
-  }
-
-  pay(payment: Payment): boolean {
-    this.currentOrder.addPayment(payment);
-
-    if (
-      this.currentOrder.getTotalPaid() >= this.currentOrder.card.getTotalPrice()
-    ) {
-      this.currentOrder.state = Order.State.PAID;
-
-      return true;
-    }
-
-    return false;
+  get lastName(): string {
+    return this._lastName;
   }
 }
