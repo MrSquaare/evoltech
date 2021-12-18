@@ -7,7 +7,7 @@ import { FSMState } from "../models/FSMState";
 
 const fsm = new FSM(FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN));
 
-export const FSMPage = () => {
+const FSMPage = () => {
   const { state, send } = useFSM(fsm);
   const [states, setStates] = useState<FSMState[]>([]);
 
@@ -58,3 +58,5 @@ export const FSMPage = () => {
     </div>
   );
 };
+
+export default FSMPage;
