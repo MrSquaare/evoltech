@@ -18,7 +18,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
       sx={{
         border: 2,
         borderRadius: "20px",
-        marginLeft: "30vw",
+        margin: "auto",
         width: "800px",
         padding: "30px",
       }}

@@ -20,49 +20,51 @@ type Props = {
 
 export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead
-          sx={{
-            backgroundColor: "#4B555FC9",
-          }}
-        >
-          <TableRow>
-            <TableCell>
-              <Typography variant="h6" component="h2" color="white">
-                Référence
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" component="h2" color="white">
-                Nom
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" component="h2" color="white">
-                Qté
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" component="h2" color="white">
-                Prix
-              </Typography>
-            </TableCell>
-            <TableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {productCards.map((productCard) => {
-            return (
-              <ProductCardListItem
-                key={productCard.reference.id}
-                productCard={productCard}
-                onDelete={onDelete}
-              />
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper sx={{ height: "720px", overflowX: "auto" }}>
+      <TableContainer>
+        <Table>
+          <TableHead
+            sx={{
+              backgroundColor: "#4B555FC9",
+            }}
+          >
+            <TableRow>
+              <TableCell>
+                <Typography variant="h6" component="h2" color="white">
+                  Référence
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h2" color="white">
+                  Nom
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h2" color="white">
+                  Qté
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="h6" component="h2" color="white">
+                  Prix
+                </Typography>
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {productCards.map((productCard) => {
+              return (
+                <ProductCardListItem
+                  key={productCard.reference.id}
+                  productCard={productCard}
+                  onDelete={onDelete}
+                />
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };

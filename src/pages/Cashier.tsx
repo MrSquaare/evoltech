@@ -11,9 +11,10 @@ import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
-const Cashier: FC = (props) => {
+const CashierPage: FC = (props) => {
   const [code, setCode] = useState<string>("");
   const handleSubmit = useCallback(() => {}, []);
+
   return (
     <Box
       sx={{
@@ -113,4 +114,4 @@ const Cashier: FC = (props) => {
   );
 };
 
-export default Cashier;
+export default CashierPage;
