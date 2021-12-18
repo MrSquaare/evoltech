@@ -10,9 +10,11 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
     <Box
       sx={{
         backgroundColor: "white",
+        padding: "1rem",
+        borderRadius: "5px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-end",
       }}
     >
       <Box
@@ -54,7 +56,12 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
       <Button
         color={"primary"}
         variant={"contained"}
-        sx={{ width: 337, height: 71, fontSize: 36 }}
+        sx={{
+          width: 337,
+          height: 71,
+          fontSize: 36,
+          backgroundColor: "#2CA849",
+        }}
       >
         Payer
       </Button>
