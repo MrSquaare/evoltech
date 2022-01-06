@@ -8,9 +8,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { ProductCard } from "../../models/ProductCard";
+import ProductDeleteModal from "../cashier/ProductDeleteModal";
 import { ProductCardListItem } from "./ProductCardListItem";
 
 type Props = {
@@ -19,6 +20,22 @@ type Props = {
 };
 
 export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
+
+  const [modalProperties, setModalProperties] = useState<{
+    visible: boolean;
+    productCard: ProductCard | undefined;
+  }>({
+    visible: false,
+    productCard: undefined,
+  });
+
+  const handleOpen = (productCard: ProductCard) => {
+    setModalProperties({ visible: true, productCard });
+  };
+  const handleClose = () => {
+    setModalProperties({ visible: false, productCard: undefined });
+  };
+
   return (
     <Paper sx={{ height: "720px", overflowX: "auto" }}>
       <TableContainer>
@@ -58,13 +75,18 @@ export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
                 <ProductCardListItem
                   key={productCard.reference.id}
                   productCard={productCard}
-                  onDelete={onDelete}
+                  handleOpen={handleOpen}
                 />
               );
             })}
           </TableBody>
         </Table>
       </TableContainer>
+      <ProductDeleteModal
+        modalProperties={modalProperties}
+        handleClose={handleClose}
+        onDelete={onDelete}
+      />
     </Paper>
   );
 };

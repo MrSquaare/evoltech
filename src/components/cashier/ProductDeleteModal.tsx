@@ -1,19 +1,26 @@
 import { Box, Button, Modal, Paper, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
+import { ProductCard } from "../../models/ProductCard";
+
 interface OwnProps {
-  open: boolean;
+  modalProperties: { visible: boolean; productCard: ProductCard | undefined };
   handleClose: () => void;
+  onDelete?: (productCard: ProductCard) => void;
 }
 
 type Props = OwnProps;
 
 const ProductDeleteModal: FunctionComponent<Props> = (props) => {
-  const { open, handleClose } = props;
+  const {
+    modalProperties: { visible, productCard },
+    handleClose,
+    onDelete,
+  } = props;
   return (
     <>
       <Modal
-        open={open}
+        open={visible}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -70,6 +77,10 @@ const ProductDeleteModal: FunctionComponent<Props> = (props) => {
                 color: "white",
                 fontFamily: "poppins",
                 fontSize: "18px",
+              }}
+              onClick={() => {
+                if (onDelete && productCard) onDelete(productCard);
+                handleClose();
               }}
             >
               Confirmer

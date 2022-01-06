@@ -6,10 +6,10 @@ import { ProductCard } from "../../models/ProductCard";
 
 type Props = {
   productCard: ProductCard;
-  onDelete?: (productCard: ProductCard) => void;
+  handleOpen?: (productCard: ProductCard) => void;
 };
 
-export const ProductCardListItem: FC<Props> = ({ productCard, onDelete }) => {
+export const ProductCardListItem: FC<Props> = ({ productCard, handleOpen }) => {
   return (
     <TableRow>
       <TableCell>
@@ -32,7 +32,7 @@ export const ProductCardListItem: FC<Props> = ({ productCard, onDelete }) => {
             backgroundColor: "#4B555FC9",
             ":hover": { backgroundColor: "#4B555FC9" },
           }}
-          onClick={() => onDelete && onDelete(productCard)}
+          onClick={() => handleOpen && handleOpen(productCard)}
         >
           <CloseIcon />
         </Button>
