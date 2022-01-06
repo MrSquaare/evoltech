@@ -25,7 +25,14 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
     >
       <Typography
         sx={{
-          padding: "20px",
+          margin: "auto",
+          fontFamily: "Poppins",
+          fontStyle: "normal",
+          fontWeight: 500,
+          fontSize: "36px",
+          lineHeight: "54px",
+          textAlign: "center",
+          color: "#2D353E",
         }}
       >
         Sélectionnez un ou des moyens de paiement
