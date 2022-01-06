@@ -2,27 +2,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import { FC } from "react";
 
-import { ProductCard } from "../../models/ProductCard";
+import { CartProduct } from "../../models/CartProduct";
 
 type Props = {
-  productCard: ProductCard;
-  onDelete?: (productCard: ProductCard) => void;
+  productCart: CartProduct;
+  onDelete?: (productCart: CartProduct) => void;
 };
 
-export const ProductCardListItem: FC<Props> = ({ productCard, onDelete }) => {
+export const CartProductListItem: FC<Props> = ({ productCart, onDelete }) => {
   return (
     <TableRow>
       <TableCell>
-        <Typography variant="body1">{productCard.reference.code}</Typography>
+        <Typography variant="body1">{productCart.reference.code}</Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1">{productCard.reference.name}</Typography>
+        <Typography variant="body1">{productCart.reference.name}</Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1">{productCard.quantity}</Typography>
+        <Typography variant="body1">{productCart.quantity}</Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1">{productCard.getTotalPrice()}</Typography>
+        <Typography variant="body1">{productCart.getTotalPrice()}</Typography>
       </TableCell>
       <TableCell align="right">
         <Button
@@ -32,7 +32,7 @@ export const ProductCardListItem: FC<Props> = ({ productCard, onDelete }) => {
             backgroundColor: "#4B555FC9",
             ":hover": { backgroundColor: "#4B555FC9" },
           }}
-          onClick={() => onDelete && onDelete(productCard)}
+          onClick={() => onDelete && onDelete(productCart)}
         >
           <CloseIcon />
         </Button>

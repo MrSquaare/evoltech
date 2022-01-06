@@ -10,15 +10,15 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { ProductCard } from "../../models/ProductCard";
-import { ProductCardListItem } from "./ProductCardListItem";
+import { CartProduct } from "../../models/CartProduct";
+import { CartProductListItem } from "./CartProductListItem";
 
 type Props = {
-  productCards: ProductCard[];
-  onDelete?: (productCard: ProductCard) => void;
+  productCarts: CartProduct[];
+  onDelete?: (productCart: CartProduct) => void;
 };
 
-export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
+export const CartProductList: FC<Props> = ({ productCarts, onDelete }) => {
   return (
     <Paper sx={{ height: "720px", overflowX: "auto" }}>
       <TableContainer>
@@ -53,11 +53,11 @@ export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productCards.map((productCard) => {
+            {productCarts.map((productCart) => {
               return (
-                <ProductCardListItem
-                  key={productCard.reference.id}
-                  productCard={productCard}
+                <CartProductListItem
+                  key={productCart.reference.id}
+                  productCart={productCart}
                   onDelete={onDelete}
                 />
               );

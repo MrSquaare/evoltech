@@ -21,7 +21,7 @@ export class CashRegister {
     this.currentOrder.addPayment(payment);
 
     if (
-      this.currentOrder.getTotalPaid() >= this.currentOrder.card.getTotalPrice()
+      this.currentOrder.getTotalPaid() >= this.currentOrder.cart.getTotalPrice()
     ) {
       this.currentOrder.state = Order.State.PAID;
 

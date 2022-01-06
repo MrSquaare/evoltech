@@ -1,13 +1,13 @@
-import { Card } from "./Card";
+import { Cart } from "./Cart";
 import { Payment } from "./Payment";
 
 export class Order {
-  private _card: Card = new Card();
+  private _cart: Cart = new Cart();
   private _payments: Payment[] = [];
   private _state: Order.State = Order.State.PENDING;
 
-  get card(): Card {
-    return this._card;
+  get cart(): Cart {
+    return this._cart;
   }
 
   set state(state: Order.State) {

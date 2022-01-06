@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import React, { FC } from "react";
 
 import { ActionsPanel } from "../components/cashier/ActionsPanel";
+import { CartProductPanel } from "../components/cashier/CartProductPanel";
 import PayementPanel from "../components/cashier/PayementPanel";
-import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
@@ -21,7 +21,7 @@ const CashierPage: FC = (props) => {
           }}
         >
           <Box sx={{ flexGrow: 1, marginBottom: "1rem" }}>
-            <ProductCardPanel />
+            <CartProductPanel />
           </Box>
           <ActionsPanel />
         </Box>
