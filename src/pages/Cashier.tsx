@@ -1,20 +1,16 @@
 import "../styles/app.scss";
 
-import CloseIcon from "@mui/icons-material/Close";
 import { Box, Container, Paper } from "@mui/material";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useState } from "react";
 
 import { ActionsPanel } from "../components/cashier/ActionsPanel";
-import DigicodePanel from "../components/cashier/DigicodePanel";
 import PayementPanel from "../components/cashier/PayementPanel";
 import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
+import ProductCodePanel from "../components/cashier/ProductCodePanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
 const CashierPage: FC = (props) => {
-  const [code, setCode] = useState<string>("");
-  const handleSubmit = useCallback(() => {}, []);
-
   return (
     <Box
       sx={{
@@ -61,38 +57,15 @@ const CashierPage: FC = (props) => {
             }}
           >
             <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "200px",
-              }}
-            >
-              <Paper
-                elevation={3}
-                sx={{
-                  padding: "1rem",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "200px",
-                  marginTop: "1rem",
-                }}
-              >
-                <span>{code}</span>
-                <CloseIcon onClick={() => setCode("")} />
-              </Paper>
-            </Box>
-            <Box
               className="digit-container-panel"
               sx={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
+                flexGrow: 1,
               }}
             >
-              <DigicodePanel onSubmit={handleSubmit} onSetCode={setCode} />
+              <ProductCodePanel />
             </Box>
           </Box>
           <Box
