@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { ActionsPanel } from "../components/cashier/ActionsPanel";
 import { CartProductPanel } from "../components/cashier/CartProductPanel";
 import CashierOpenModal from "../components/cashier/CashierOpenModal";
 import PayementPanel from "../components/cashier/PayementPanel";
+import ProductCodePanel from "../components/cashier/ProductCodePanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
@@ -43,16 +44,54 @@ const CashierPage: FC = (props) => {
           </Box>
           <ActionsPanel />
         </Box>
-        <Box
+        <Container
+          maxWidth={"sm"}
           sx={{
-            flexGrow: 1,
             display: "flex",
+            alignItems: "center",
             flexDirection: "column",
-            padding: "1rem",
+            justifyContent: "space-between",
           }}
         >
-          <PayementPanel />
-        </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "start",
+              justifyContent: "space-between",
+              width: "100%",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "5px",
+              marginTop: "1rem",
+              padding: "20px",
+            }}
+          >
+            <Box
+              className="digit-container-panel"
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                flexGrow: 1,
+              }}
+            >
+              <ProductCodePanel />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+              padding: "1rem",
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <PayementPanel />
+          </Box>
+        </Container>
       </Box>
       <CashierOpenModal open={isCashierOpen} handleClose={handleCloseCashier} />
     </Box>

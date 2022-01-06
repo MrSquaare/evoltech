@@ -1,17 +1,35 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, Button, Paper } from "@mui/material";
-import React, { FunctionComponent } from "react";
+import { Box, Paper } from "@mui/material";
+import React, { FunctionComponent, useCallback, useState } from "react";
 
-import Digicode from "./Digicode";
+import ProductDigicode from "./ProductDigicode";
 
 interface OwnProps {}
 
 type Props = OwnProps;
 
 const ProductCodePanel: FunctionComponent<Props> = (props) => {
+  const [code, setCode] = useState<string>("");
+  const handleCase = useCallback((value) => {
+    setCode((code) => (code.length < 4 ? code + value : code));
+  }, []);
+  const handleClear = useCallback(() => {
+    setCode("");
+  }, []);
+  const handleSubmit = useCallback(() => {
+    console.log("Code:", code);
+  }, [code]);
+
   return (
-    <Box sx={{ display: "flex", padding: 2 }}>
-      <Box className="code-container" sx={{ flex: 1 }}>
+    <Box sx={{ display: "flex", flexGrow: 1 }}>
+      <Box
+        className="code-container"
+        sx={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <Box>
           <Paper
             elevation={3}
@@ -20,19 +38,39 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              height: "50px",
+              margin: "10px",
               flex: 1,
             }}
           >
-            <span>{48}</span>
-            <CloseIcon />
+            <span>{code}</span>
           </Paper>
         </Box>
         <Box>
-          <Button>Produit inconnu</Button>
+          <Paper
+            elevation={3}
+            sx={{
+              backgroundColor: "#2E4C6D",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "50px",
+              boxSizing: "border-box",
+              margin: "10px",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            Produit inconnu
+          </Paper>
         </Box>
       </Box>
-      <Box sx={{ flex: 1 }}>
-        <Digicode />
+      <Box sx={{ flex: 2 }}>
+        <ProductDigicode
+          onCase={handleCase}
+          onClear={handleClear}
+          onSubmit={handleSubmit}
+        />
       </Box>
     </Box>
   );
