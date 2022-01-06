@@ -16,9 +16,14 @@ import { CartProductListItem } from "./CartProductListItem";
 type Props = {
   productCarts: CartProduct[];
   onDelete?: (productCart: CartProduct) => void;
+  onQuantityChange: (productCart: CartProduct, quantity: number) => void;
 };
 
-export const CartProductList: FC<Props> = ({ productCarts, onDelete }) => {
+export const CartProductList: FC<Props> = ({
+  productCarts,
+  onDelete,
+  onQuantityChange,
+}) => {
   return (
     <Paper sx={{ height: "720px", overflowX: "auto" }}>
       <TableContainer>
@@ -59,6 +64,7 @@ export const CartProductList: FC<Props> = ({ productCarts, onDelete }) => {
                   key={productCart.reference.id}
                   productCart={productCart}
                   onDelete={onDelete}
+                  onQuantityChange={onQuantityChange}
                 />
               );
             })}
