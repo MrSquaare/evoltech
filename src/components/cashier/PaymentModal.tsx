@@ -25,7 +25,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
       <Typography
         sx={{
           margin: "auto",
-          fontFamily: "Poppins",
+          fontFamily: "Poppins, sans-serif",
           fontStyle: "normal",
           fontWeight: 500,
           fontSize: "36px",
@@ -80,7 +80,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           size="large"
           sx={{
             fontWeight: 500,
-            fontFamily: "Poppins",
+            fontFamily: "Poppins, sans-serif",
             fontStyle: "normal",
             marginLeft: "69%",
             background: "#BBBBBB",
@@ -101,7 +101,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           size="large"
           sx={{
             fontWeight: 500,
-            fontFamily: "Poppins",
+            fontFamily: "Poppins, sans-serif",
             fontStyle: "normal",
             margin: "5%",
             backgroundColor: "#2E4C6D",
@@ -115,7 +115,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
         <Button
           size="large"
           sx={{
-            fontFamily: "Poppins",
+            fontFamily: "Poppins, sans-serif",
             fontStyle: "normal",
             fontWeight: 500,
             margin: "5%",
@@ -134,7 +134,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           sx={{
             fontWeight: 500,
             fontStyle: "normal",
-            fontFamily: "Poppins",
+            fontFamily: "Poppins, sans-serif",
             margin: "5%",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
             borderRadius: "10px",
