@@ -31,7 +31,12 @@ export const CartProductListItem: FC<Props> = ({
       <TableCell>
         <Typography variant="body1">{productCart.reference.name}</Typography>
       </TableCell>
-      <TableCell onClick={() => setIsQuantityEdited(true)}>
+      <TableCell
+        onClick={() => setIsQuantityEdited(true)}
+        sx={{
+          width: "100px",
+        }}
+      >
         {isQuantityEdited ? (
           <TextField
             value={productCart.quantity}
@@ -40,6 +45,8 @@ export const CartProductListItem: FC<Props> = ({
               onQuantityChange(productCart, parseInt(e.target.value) || 0)
             }
             onBlur={() => setIsQuantityEdited(false)}
+            autoFocus={true}
+            size={"small"}
           />
         ) : (
           <Typography variant="body1">{productCart.quantity}</Typography>
