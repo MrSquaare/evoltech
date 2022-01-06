@@ -1,5 +1,6 @@
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import PresentToAllIcon from "@mui/icons-material/PresentToAll";
 import { Box, IconButton, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
@@ -37,6 +38,9 @@ const TopBar: FunctionComponent<Props> = ({ cashier }) => {
         <Box sx={{ marginRight: "0.5rem" }}>
           <TopBarClock />
         </Box>
+        <IconButton size="large" sx={{ color: "white" }}>
+          <PresentToAllIcon />
+        </IconButton>
         <IconButton size="large" sx={{ color: "white" }}>
           <PowerSettingsNewIcon />
         </IconButton>
