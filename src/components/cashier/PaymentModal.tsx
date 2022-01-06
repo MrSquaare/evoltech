@@ -79,6 +79,9 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           variant="contained"
           size="large"
           sx={{
+            fontWeight: 500,
+            fontFamily: "Poppins",
+            fontStyle: "normal",
             marginLeft: "69%",
             background: "#BBBBBB",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
@@ -97,6 +100,9 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           variant="contained"
           size="large"
           sx={{
+            fontWeight: 500,
+            fontFamily: "Poppins",
+            fontStyle: "normal",
             margin: "5%",
             backgroundColor: "#2E4C6D",
             color: "white",
@@ -104,11 +110,14 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
             borderRadius: "10px",
           }}
         >
-          Retour
+          {"<"} Retour
         </Button>
         <Button
           size="large"
           sx={{
+            fontFamily: "Poppins",
+            fontStyle: "normal",
+            fontWeight: 500,
             margin: "5%",
             backgroundColor: "white",
             color: "#2E4C6D",
@@ -123,12 +132,15 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           color="success"
           size="large"
           sx={{
+            fontWeight: 500,
+            fontStyle: "normal",
+            fontFamily: "Poppins",
             margin: "5%",
             boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
             borderRadius: "10px",
           }}
         >
-          Payer
+          Payer {">"}
         </Button>
       </Box>
     </Paper>
