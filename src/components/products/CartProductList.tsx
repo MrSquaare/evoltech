@@ -8,17 +8,38 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useState } from "react";
 
-import { ProductCard } from "../../models/ProductCard";
-import { ProductCardListItem } from "./ProductCardListItem";
+import { CartProduct } from "../../models/CartProduct";
+import ProductDeleteModal from "../cashier/ProductDeleteModal";
+import { CartProductListItem } from "./CartProductListItem";
 
 type Props = {
-  productCards: ProductCard[];
-  onDelete?: (productCard: ProductCard) => void;
+  productCarts: CartProduct[];
+  onDelete?: (productCart: CartProduct) => void;
+  onQuantityChange: (productCart: CartProduct, quantity: number) => void;
 };
 
-export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
+export const CartProductList: FC<Props> = ({
+  productCarts,
+  onDelete,
+  onQuantityChange,
+}) => {
+  const [modalProperties, setModalProperties] = useState<{
+    visible: boolean;
+    cartProduct: CartProduct | undefined;
+  }>({
+    visible: false,
+    cartProduct: undefined,
+  });
+
+  const handleOpen = (cartProduct: CartProduct) => {
+    setModalProperties({ visible: true, cartProduct });
+  };
+  const handleClose = () => {
+    setModalProperties({ visible: false, cartProduct: undefined });
+  };
+
   return (
     <Paper sx={{ height: "720px", overflowX: "auto" }}>
       <TableContainer>
@@ -53,18 +74,24 @@ export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productCards.map((productCard) => {
+            {productCarts.map((productCart) => {
               return (
-                <ProductCardListItem
-                  key={productCard.reference.id}
-                  productCard={productCard}
-                  onDelete={onDelete}
+                <CartProductListItem
+                  key={productCart.reference.id}
+                  productCart={productCart}
+                  handleOpen={handleOpen}
+                  onQuantityChange={onQuantityChange}
                 />
               );
             })}
           </TableBody>
         </Table>
       </TableContainer>
+      <ProductDeleteModal
+        modalProperties={modalProperties}
+        handleClose={handleClose}
+        onDelete={onDelete}
+      />
     </Paper>
   );
 };

@@ -1,17 +1,17 @@
+import { CartProduct } from "./CartProduct";
 import { Product } from "./Product";
-import { ProductCard } from "./ProductCard";
 
-export class Card {
-  private _products: Map<string, ProductCard> = new Map();
+export class Cart {
+  private _products: Map<string, CartProduct> = new Map();
 
-  get products(): Map<string, ProductCard> {
+  get products(): Map<string, CartProduct> {
     return this._products;
   }
 
   addProduct(product: Product): void {
-    const productCard = new ProductCard(product, 1);
+    const productCart = new CartProduct(product, 1);
 
-    this._products.set(productCard.reference.id, productCard);
+    this._products.set(productCart.reference.id, productCart);
   }
 
   updateProductQuantity(productId: string, quantity: number): boolean {

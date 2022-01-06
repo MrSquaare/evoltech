@@ -1,6 +1,6 @@
 import { Product } from "./Product";
 
-export class ProductCard {
+export class CartProduct {
   constructor(private _reference: Product, private _quantity: number) {}
 
   get reference() {

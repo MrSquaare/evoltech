@@ -37,7 +37,16 @@ const LoginPage: FunctionComponent<Props> = (props) => {
               alignItems: "center",
             }}
           >
-            <span>{code}</span>
+            <Box
+              component={"span"}
+              sx={{
+                fontFamily: "Roboto,sans-serif",
+                fontSize: "36px",
+                color: "#2E4C6D",
+              }}
+            >
+              {code}
+            </Box>
             <IconButton>
               <CloseIcon onClick={() => setCode("")} />
             </IconButton>

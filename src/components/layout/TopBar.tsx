@@ -1,5 +1,6 @@
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import PresentToAllIcon from "@mui/icons-material/PresentToAll";
 import { Box, IconButton, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
@@ -8,9 +9,15 @@ import { TopBarClock } from "./TopBarClock";
 
 type Props = {
   cashier: Cashier;
+  onOpenCashier: () => void;
+  onDisconnect: () => void;
 };
 
-const TopBar: FunctionComponent<Props> = ({ cashier }) => {
+const TopBar: FunctionComponent<Props> = ({
+  cashier,
+  onOpenCashier,
+  onDisconnect,
+}) => {
   return (
     <Box
       sx={{
@@ -37,7 +44,18 @@ const TopBar: FunctionComponent<Props> = ({ cashier }) => {
         <Box sx={{ marginRight: "0.5rem" }}>
           <TopBarClock />
         </Box>
-        <IconButton size="large" sx={{ color: "white" }}>
+        <IconButton
+          size="large"
+          sx={{ color: "white" }}
+          onClick={() => onOpenCashier()}
+        >
+          <PresentToAllIcon />
+        </IconButton>
+        <IconButton
+          size="large"
+          sx={{ color: "white" }}
+          onClick={() => onDisconnect()}
+        >
           <PowerSettingsNewIcon />
         </IconButton>
       </Box>

@@ -44,7 +44,8 @@ const Case: FunctionComponent<CaseProps> = ({ children, onClick }) => {
         boxSizing: "border-box",
         margin: "13px",
         color: "white",
-        fontSize: "26px",
+        fontSize: "36px",
+        fontFamily: "Roboto,sans-serif",
         ":hover": {
           backgroundColor: "#2E4C6D",
         },
@@ -71,7 +72,8 @@ const CaseSubmit: FunctionComponent<{ onClick: () => void }> = (props) => {
         boxSizing: "border-box",
         margin: "13px",
         color: "white",
-        fontSize: "26px",
+        fontSize: "36px",
+        fontFamily: "Poppins, sans-serif",
         ":hover": {
           backgroundColor: "#FC997C",
         },

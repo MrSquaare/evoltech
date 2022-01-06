@@ -1,25 +1,35 @@
-import "../styles/app.scss";
-
-import { Box, Container, Paper } from "@mui/material";
-import React, { FC, useState } from "react";
+import { Box, Container } from "@mui/material";
+import React, { FC, useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { ActionsPanel } from "../components/cashier/ActionsPanel";
+import { CartProductPanel } from "../components/cashier/CartProductPanel";
+import CashierOpenModal from "../components/cashier/CashierOpenModal";
 import PayementPanel from "../components/cashier/PayementPanel";
-import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
 import ProductCodePanel from "../components/cashier/ProductCodePanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
 const CashierPage: FC = (props) => {
+  const navigate = useNavigate();
+  const [isCashierOpen, setCashierOpen] = useState(false);
+  const handleOpenCashier = useCallback(() => {
+    setCashierOpen(true);
+  }, []);
+  const handleCloseCashier = useCallback(() => {
+    setCashierOpen(false);
+  }, []);
+  const handleDisconnect = useCallback(() => {
+    navigate("/login");
+  }, [navigate]);
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
-      <TopBar cashier={cashier} />
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <TopBar
+        cashier={cashier}
+        onOpenCashier={handleOpenCashier}
+        onDisconnect={handleDisconnect}
+      />
       <Box sx={{ display: "flex", flexGrow: 1 }}>
         <Box
           sx={{
@@ -30,7 +40,7 @@ const CashierPage: FC = (props) => {
           }}
         >
           <Box sx={{ flexGrow: 1, marginBottom: "1rem" }}>
-            <ProductCardPanel />
+            <CartProductPanel />
           </Box>
           <ActionsPanel />
         </Box>
@@ -83,6 +93,7 @@ const CashierPage: FC = (props) => {
           </Box>
         </Container>
       </Box>
+      <CashierOpenModal open={isCashierOpen} handleClose={handleCloseCashier} />
     </Box>
   );
 };
