@@ -12,13 +12,13 @@ import { CartProduct } from "../../models/CartProduct";
 
 type Props = {
   productCart: CartProduct;
-  onDelete?: (productCart: CartProduct) => void;
+  handleOpen?: (productCart: CartProduct) => void;
   onQuantityChange: (productCart: CartProduct, quantity: number) => void;
 };
 
 export const CartProductListItem: FC<Props> = ({
   productCart,
-  onDelete,
+  handleOpen,
   onQuantityChange,
 }) => {
   const [isQuantityEdited, setIsQuantityEdited] = useState(false);
@@ -56,7 +56,7 @@ export const CartProductListItem: FC<Props> = ({
             backgroundColor: "#4B555FC9",
             ":hover": { backgroundColor: "#4B555FC9" },
           }}
-          onClick={() => onDelete && onDelete(productCart)}
+          onClick={() => handleOpen && handleOpen(productCart)}
         >
           <CloseIcon />
         </Button>

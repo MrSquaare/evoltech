@@ -1,19 +1,19 @@
 import { Box, Button, Modal, Paper, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
-import { ProductCard } from "../../models/ProductCard";
+import { CartProduct } from "../../models/CartProduct";
 
 interface OwnProps {
-  modalProperties: { visible: boolean; productCard: ProductCard | undefined };
+  modalProperties: { visible: boolean; cartProduct: CartProduct | undefined };
   handleClose: () => void;
-  onDelete?: (productCard: ProductCard) => void;
+  onDelete?: (cartProduct: CartProduct) => void;
 }
 
 type Props = OwnProps;
 
 const ProductDeleteModal: FunctionComponent<Props> = (props) => {
   const {
-    modalProperties: { visible, productCard },
+    modalProperties: { visible, cartProduct },
     handleClose,
     onDelete,
   } = props;
@@ -79,7 +79,7 @@ const ProductDeleteModal: FunctionComponent<Props> = (props) => {
                 fontSize: "18px",
               }}
               onClick={() => {
-                if (onDelete && productCard) onDelete(productCard);
+                if (onDelete && cartProduct) onDelete(cartProduct);
                 handleClose();
               }}
             >

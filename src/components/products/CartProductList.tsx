@@ -27,17 +27,17 @@ export const CartProductList: FC<Props> = ({
 }) => {
   const [modalProperties, setModalProperties] = useState<{
     visible: boolean;
-    productCard: ProductCard | undefined;
+    cartProduct: CartProduct | undefined;
   }>({
     visible: false,
-    productCard: undefined,
+    cartProduct: undefined,
   });
 
-  const handleOpen = (productCard: ProductCard) => {
-    setModalProperties({ visible: true, productCard });
+  const handleOpen = (cartProduct: CartProduct) => {
+    setModalProperties({ visible: true, cartProduct });
   };
   const handleClose = () => {
-    setModalProperties({ visible: false, productCard: undefined });
+    setModalProperties({ visible: false, cartProduct: undefined });
   };
 
   return (
