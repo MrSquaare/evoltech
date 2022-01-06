@@ -1,4 +1,3 @@
-import CloseIcon from "@mui/icons-material/Close";
 import { Box, Paper } from "@mui/material";
 import React, { FunctionComponent, useCallback, useState } from "react";
 

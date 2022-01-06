@@ -4,7 +4,8 @@ import React, { FunctionComponent } from "react";
 import { CartProduct } from "../../models/CartProduct";
 
 interface OwnProps {
-  modalProperties: { visible: boolean; cartProduct: CartProduct | undefined };
+  open: boolean;
+  cartProduct: CartProduct | undefined;
   handleClose: () => void;
   onDelete?: (cartProduct: CartProduct) => void;
 }
@@ -12,15 +13,11 @@ interface OwnProps {
 type Props = OwnProps;
 
 const ProductDeleteModal: FunctionComponent<Props> = (props) => {
-  const {
-    modalProperties: { visible, cartProduct },
-    handleClose,
-    onDelete,
-  } = props;
+  const { open, cartProduct, handleClose, onDelete } = props;
   return (
     <>
       <Modal
-        open={visible}
+        open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

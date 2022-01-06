@@ -88,7 +88,8 @@ export const CartProductList: FC<Props> = ({
         </Table>
       </TableContainer>
       <ProductDeleteModal
-        modalProperties={modalProperties}
+        open={modalProperties.visible}
+        cartProduct={modalProperties.cartProduct}
         handleClose={handleClose}
         onDelete={onDelete}
       />

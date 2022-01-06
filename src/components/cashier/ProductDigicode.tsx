@@ -1,5 +1,4 @@
 import { Button, Grid } from "@mui/material";
-import { Paper } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
 type Props = {
