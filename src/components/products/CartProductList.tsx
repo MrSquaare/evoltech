@@ -10,17 +10,21 @@ import {
 } from "@mui/material";
 import { FC, useState } from "react";
 
-import { ProductCard } from "../../models/ProductCard";
+import { CartProduct } from "../../models/CartProduct";
 import ProductDeleteModal from "../cashier/ProductDeleteModal";
-import { ProductCardListItem } from "./ProductCardListItem";
+import { CartProductListItem } from "./CartProductListItem";
 
 type Props = {
-  productCards: ProductCard[];
-  onDelete?: (productCard: ProductCard) => void;
+  productCarts: CartProduct[];
+  onDelete?: (productCart: CartProduct) => void;
+  onQuantityChange: (productCart: CartProduct, quantity: number) => void;
 };
 
-export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
-
+export const CartProductList: FC<Props> = ({
+  productCarts,
+  onDelete,
+  onQuantityChange,
+}) => {
   const [modalProperties, setModalProperties] = useState<{
     visible: boolean;
     productCard: ProductCard | undefined;
@@ -70,12 +74,13 @@ export const ProductCardList: FC<Props> = ({ productCards, onDelete }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productCards.map((productCard) => {
+            {productCarts.map((productCart) => {
               return (
-                <ProductCardListItem
-                  key={productCard.reference.id}
-                  productCard={productCard}
+                <CartProductListItem
+                  key={productCart.reference.id}
+                  productCart={productCart}
                   handleOpen={handleOpen}
+                  onQuantityChange={onQuantityChange}
                 />
               );
             })}

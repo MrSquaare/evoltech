@@ -1,16 +1,34 @@
 import { Box } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { ActionsPanel } from "../components/cashier/ActionsPanel";
+import { CartProductPanel } from "../components/cashier/CartProductPanel";
+import CashierOpenModal from "../components/cashier/CashierOpenModal";
 import PayementPanel from "../components/cashier/PayementPanel";
-import { ProductCardPanel } from "../components/cashier/ProductCardPanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 
 const CashierPage: FC = (props) => {
+  const navigate = useNavigate();
+  const [isCashierOpen, setCashierOpen] = useState(false);
+  const handleOpenCashier = useCallback(() => {
+    setCashierOpen(true);
+  }, []);
+  const handleCloseCashier = useCallback(() => {
+    setCashierOpen(false);
+  }, []);
+  const handleDisconnect = useCallback(() => {
+    navigate("/login");
+  }, [navigate]);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <TopBar cashier={cashier} />
+      <TopBar
+        cashier={cashier}
+        onOpenCashier={handleOpenCashier}
+        onDisconnect={handleDisconnect}
+      />
       <Box sx={{ display: "flex", flexGrow: 1 }}>
         <Box
           sx={{
@@ -21,7 +39,7 @@ const CashierPage: FC = (props) => {
           }}
         >
           <Box sx={{ flexGrow: 1, marginBottom: "1rem" }}>
-            <ProductCardPanel />
+            <CartProductPanel />
           </Box>
           <ActionsPanel />
         </Box>
@@ -36,6 +54,7 @@ const CashierPage: FC = (props) => {
           <PayementPanel />
         </Box>
       </Box>
+      <CashierOpenModal open={isCashierOpen} handleClose={handleCloseCashier} />
     </Box>
   );
 };
