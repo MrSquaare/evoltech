@@ -24,3 +24,9 @@ yarn-error.log*
 
 # Snyk
 .dccache
+
+# Jetbrains IDE
+.idea/
+
+# VSCode
+.vscode/
