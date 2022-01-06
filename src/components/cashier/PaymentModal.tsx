@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
 import cash from "../../asset/cash.png";
@@ -14,14 +14,13 @@ type Props = OwnProps;
 const PaymentModal: FunctionComponent<Props> = (props) => {
   const { price } = props;
   return (
-    <Box
+    <Paper
       sx={{
-        border: 2,
-        borderRadius: "20px",
         margin: "auto",
         width: "800px",
         padding: "30px",
       }}
+      elevation={3}
     >
       <Typography
         sx={{
@@ -42,13 +41,12 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           backgroundColor: "white",
           display: "flex",
           alignItems: "center",
+          marginTop: "50px",
+          marginBottom: "50px",
+          justifyContent: "center",
         }}
       >
-        <Box
-          sx={{
-            padding: "50px",
-          }}
-        >
+        <Box>
           <Button
             onClick={() => {
               alert("CB sélectionné pour le paiement");
@@ -133,7 +131,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           Payer
         </Button>
       </Box>
-    </Box>
+    </Paper>
   );
 };
 
