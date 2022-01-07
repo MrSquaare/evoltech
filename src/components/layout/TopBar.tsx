@@ -2,9 +2,12 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import PresentToAllIcon from "@mui/icons-material/PresentToAll";
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 
+import { products } from "../../constants/samples";
+import { useCashRegister } from "../../hooks/useCashRegister";
 import { Cashier } from "../../models/Cashier";
+import { ProductRepository } from "../../repositories/product";
 import { TopBarClock } from "./TopBarClock";
 
 type Props = {
@@ -18,6 +21,16 @@ const TopBar: FunctionComponent<Props> = ({
   onOpenCashier,
   onDisconnect,
 }) => {
+  const productRepository = useMemo(
+    () => ProductRepository.getInstance(products),
+    []
+  );
+  const { handleScanProduct } = useCashRegister();
+
+  const simulateScan = useCallback(() => {
+    handleScanProduct(productRepository.scanProduct());
+  }, [handleScanProduct, productRepository]);
+
   return (
     <Box
       sx={{
@@ -51,7 +64,7 @@ const TopBar: FunctionComponent<Props> = ({
             backgroundColor: "black",
             marginRight: "30px",
           }}
-          onClick={() => alert("simulation scan")}
+          onClick={() => simulateScan()}
         >
           Scan
         </Button>
