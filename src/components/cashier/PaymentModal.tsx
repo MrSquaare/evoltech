@@ -1,5 +1,17 @@
-import { Box, Button, Modal, Paper, Typography } from "@mui/material";
-import React, { FunctionComponent, useCallback, useState } from "react";
+import {
+  Box,
+  Button,
+  Modal,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
 import cash from "../../asset/cash.png";
 import cb from "../../asset/cb.png";
@@ -22,12 +34,19 @@ const PaymentModal: FunctionComponent<Props> = ({
 }) => {
   const { handlePayOrder } = useCashRegister();
   const [paymentType, setPaymentType] = useState("cb");
+  const [amount, setAmount] = useState<number | null>(null);
+  const [isAmountEdited, setIsAmountEdited] = useState(false);
+  const currentAmount = useMemo(
+    () => (amount !== null ? amount : price),
+    [amount, price]
+  );
 
   const handlePay = useCallback(() => {
-    const payment = new Payment(price);
+    const payment = new Payment(currentAmount);
 
     handlePayOrder(payment);
-  }, [price, handlePayOrder]);
+    setAmount(null);
+  }, [currentAmount, handlePayOrder, setAmount]);
 
   return (
     <Modal
@@ -84,26 +103,38 @@ const PaymentModal: FunctionComponent<Props> = ({
             </Button>
           </Box>
         </Box>
-        <Box>
-          <Button
-            variant="contained"
-            size="large"
+        <Box
+          sx={{
+            backgroundColor: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Paper
             sx={{
-              fontWeight: 500,
+              display: "inline-block",
+              padding: "9px 22px",
               fontFamily: "Poppins, sans-serif",
               fontStyle: "normal",
-              marginLeft: "69%",
-              background: "#BBBBBB",
+              fontWeight: 500,
+              backgroundColor: "white",
+              color: "#2E4C6D",
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
           >
-            Payer une partie
-          </Button>
+            Type de paiement sélectionné :{" "}
+            {paymentType === "cb" ? "Carte bancaire" : null}
+            {paymentType === "cash" ? "Liquide" : null}
+            {paymentType === "check" ? "Chèque" : null}
+          </Paper>
         </Box>
         <Box
           sx={{
-            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <Button
@@ -125,7 +156,7 @@ const PaymentModal: FunctionComponent<Props> = ({
           </Button>
           <Paper
             sx={{
-              display: "inline-block",
+              display: "flex",
               padding: "9px 22px",
               fontFamily: "Poppins, sans-serif",
               fontStyle: "normal",
@@ -135,9 +166,48 @@ const PaymentModal: FunctionComponent<Props> = ({
               color: "#2E4C6D",
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
+            onClick={() => setIsAmountEdited(true)}
           >
-            A PAYER : {price} €
+            A PAYER (€) :
+            {isAmountEdited ? (
+              <TextField
+                variant="outlined"
+                value={currentAmount}
+                onChange={(e) => {
+                  const parsedValue = parseInt(e.target.value || "0");
+
+                  if (isNaN(parsedValue)) return;
+
+                  setAmount(parsedValue > price ? price : parsedValue);
+                }}
+                onBlur={(e) => {
+                  setIsAmountEdited(false);
+                }}
+                autoFocus={true}
+                size={"small"}
+                sx={{
+                  display: "inline-block",
+                  marginLeft: "4px",
+                  marginRight: "4px",
+                  width: "100px",
+                }}
+              />
+            ) : (
+              <Typography
+                variant="body1"
+                sx={{
+                  display: "inline-block",
+                  marginLeft: "4px",
+                  marginRight: "4px",
+                }}
+              >
+                {currentAmount}
+              </Typography>
+            )}
           </Paper>
           <Button
             variant="contained"
