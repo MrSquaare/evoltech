@@ -1,7 +1,7 @@
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import PresentToAllIcon from "@mui/icons-material/PresentToAll";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
 import { Cashier } from "../../models/Cashier";
@@ -41,6 +41,21 @@ const TopBar: FunctionComponent<Props> = ({
           alignItems: "center",
         }}
       >
+        <Button
+          color={"primary"}
+          variant={"contained"}
+          sx={{
+            width: "30px",
+            height: "30px",
+            fontSize: 10,
+            backgroundColor: "black",
+            marginRight: "30px",
+          }}
+          onClick={() => alert("simulation scan")}
+        >
+          Scan
+        </Button>
+
         <Box sx={{ marginRight: "0.5rem" }}>
           <TopBarClock />
         </Box>
