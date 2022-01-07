@@ -135,6 +135,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
+            onClick={handleClose}
           >
             {"<"} Retour
           </Button>
@@ -165,6 +166,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
+            onClick={handleClose}
           >
             Payer {">"}
           </Button>
