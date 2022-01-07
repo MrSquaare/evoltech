@@ -25,8 +25,12 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
       <Paper
         sx={{
           margin: "auto",
-          width: "800px",
+          width: "1000px",
           padding: "30px",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
         }}
         elevation={3}
       >
@@ -52,6 +56,20 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
             marginTop: "50px",
             marginBottom: "50px",
             justifyContent: "center",
+
+            "&  img": {
+              objectPosition: "center",
+              objectFit: "cover",
+              height: "150px",
+            },
+
+            "& button": {
+              border: "5px solid transparent",
+              margin: "16px",
+            },
+            "& button:hover": {
+              border: "5px solid #FC997C",
+            },
           }}
         >
           <Box>
@@ -60,7 +78,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
                 alert("CB sélectionné pour le paiement");
               }}
             >
-              <img src={cb} width="200px" height="100px" />
+              <img src={cb} />
             </Button>
           </Box>
           <Box>
@@ -69,7 +87,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
                 alert("Espèces  sélectionné pour le paiement");
               }}
             >
-              <img src={cash} width="200px" height="100px" />
+              <img src={cash} />
             </Button>
           </Box>
           <Box>
@@ -78,7 +96,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
                 alert("Chèque sélectionné pour le paiement");
               }}
             >
-              <img src={chec} width="200px" height="100px" />
+              <img src={chec} />
             </Button>
           </Box>
         </Box>
@@ -117,11 +135,12 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
+            onClick={handleClose}
           >
             {"<"} Retour
           </Button>
           <Button
-            size="large"
+            component={"span"}
             sx={{
               fontFamily: "Poppins, sans-serif",
               fontStyle: "normal",
@@ -147,6 +166,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
+            onClick={handleClose}
           >
             Payer {">"}
           </Button>
