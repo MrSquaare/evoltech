@@ -66,6 +66,30 @@ export const useCashRegister = () => {
     [setCashRegister]
   );
 
+  const handleHoldOrder = useCallback(() => {
+    setCashRegister((cashRegister) => {
+      cashRegister.holdOrder();
+
+      return cashRegister.clone();
+    });
+  }, [setCashRegister]);
+
+  const handleResumeOrder = useCallback(() => {
+    setCashRegister((cashRegister) => {
+      cashRegister.resumeOrder();
+
+      return cashRegister.clone();
+    });
+  }, [setCashRegister]);
+
+  const handleResetOrder = useCallback(() => {
+    setCashRegister((cashRegister) => {
+      cashRegister.resetOrder();
+
+      return cashRegister.clone();
+    });
+  }, [setCashRegister]);
+
   return {
     cashRegister,
     handleSetProductCode,
@@ -73,5 +97,8 @@ export const useCashRegister = () => {
     handleAddProduct,
     handleUpdateProductQuantity,
     handleRemoveProduct,
+    handleHoldOrder,
+    handleResumeOrder,
+    handleResetOrder,
   };
 };
