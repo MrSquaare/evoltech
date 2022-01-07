@@ -21,6 +21,10 @@ export class Order {
   getTotalPaid(): number {
     return this._payments.reduce((total, payment) => total + payment.price, 0);
   }
+
+  getRemainingPrice(): number {
+    return this._cart.getTotalPrice() - this.getTotalPaid();
+  }
 }
 
 export namespace Order {

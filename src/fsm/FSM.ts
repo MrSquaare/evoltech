@@ -10,13 +10,8 @@ const flows: FSMFlow[] = [
   },
   {
     fromStateType: FSMState.Type.WAIT_PRODUCT_QUANTITY,
-    toStateType: FSMState.Type.UPDATE_PRODUCT_QUANTITY,
-    eventType: FSMEvent.Type.QUANTITY_ENTERED,
-  },
-  {
-    fromStateType: FSMState.Type.UPDATE_PRODUCT_QUANTITY,
     toStateType: FSMState.Type.WAIT_PRODUCT_SCAN,
-    eventType: FSMEvent.Type.QUANTITY_UPDATED,
+    eventType: FSMEvent.Type.QUANTITY_ENTERED,
   },
   {
     fromStateType: FSMState.Type.WAIT_PRODUCT_SCAN,
@@ -31,7 +26,7 @@ const flows: FSMFlow[] = [
   {
     fromStateType: FSMState.Type.FIND_PRODUCT,
     toStateType: FSMState.Type.WAIT_PRODUCT_QUANTITY,
-    eventType: FSMEvent.Type.PRODUCT_FOUND,
+    eventType: FSMEvent.Type.PRODUCT_ADDED,
   },
 ];
 
@@ -68,5 +63,13 @@ export class FSM {
     }
 
     return isValid;
+  }
+
+  clone(): FSM {
+    const clonedObj = Object.assign({}, this);
+
+    Object.setPrototypeOf(clonedObj, Object.getPrototypeOf(this));
+
+    return clonedObj;
   }
 }

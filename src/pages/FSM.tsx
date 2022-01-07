@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import { FSMProvider } from "../contexts/FSMContext";
 import { FSM } from "../fsm/FSM";
 import { useFSM } from "../hooks/useFSM";
 import { FSMEvent } from "../models/FSMEvent";
 import { FSMState } from "../models/FSMState";
 
-const fsm = new FSM(FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN));
-
 const FSMPage = () => {
-  const { state, send } = useFSM(fsm);
+  const { fsm, send } = useFSM();
   const [states, setStates] = useState<FSMState[]>([]);
 
   useEffect(() => {
-    setStates((states) => [...states, state]);
-  }, [state]);
+    setStates((states) => [...states, fsm.state]);
+  }, [fsm]);
 
   return (
     <div>
@@ -34,21 +33,16 @@ const FSMPage = () => {
         >
           Product code entered
         </button>
-        <button onClick={() => send(new FSMEvent(FSMEvent.Type.PRODUCT_FOUND))}>
-          Product found
+        <button onClick={() => send(new FSMEvent(FSMEvent.Type.PRODUCT_ADDED))}>
+          Product added
         </button>
         <button
           onClick={() => send(new FSMEvent(FSMEvent.Type.QUANTITY_ENTERED))}
         >
           Quantity entered
         </button>
-        <button
-          onClick={() => send(new FSMEvent(FSMEvent.Type.QUANTITY_UPDATED))}
-        >
-          Quantity updated
-        </button>
       </div>
-      <div>Current state: {state.type}</div>
+      <div>Current state: {fsm.state.type}</div>
       <div>
         States:{" "}
         {states.map((state, index) => (
@@ -59,4 +53,18 @@ const FSMPage = () => {
   );
 };
 
-export default FSMPage;
+const FSMPageWithProviders = () => {
+  const initState = useMemo(
+    () => FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN),
+    []
+  );
+  const fsm = useMemo(() => new FSM(initState), [initState]);
+
+  return (
+    <FSMProvider fsm={fsm}>
+      <FSMPage />
+    </FSMProvider>
+  );
+};
+
+export default FSMPageWithProviders;

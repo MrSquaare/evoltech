@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
-import React, { FunctionComponent, useMemo, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 
+import { useCashRegister } from "../../hooks/useCashRegister";
 import PaymentModal from "./PaymentModal";
 
 interface OwnProps {}
@@ -8,7 +9,7 @@ interface OwnProps {}
 type Props = OwnProps;
 
 const PayementPanel: FunctionComponent<Props> = (props) => {
-  const price = useMemo(() => "20.5", []);
+  const { cashRegister } = useCashRegister();
   const [modalProperties, setModalProperties] = useState<{
     visible: boolean;
   }>({
@@ -65,7 +66,9 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
             border: "1px solid #CCCCCC",
           }}
         >
-          <Typography fontSize={32}>{price} €</Typography>
+          <Typography fontSize={32}>
+            {cashRegister.currentOrder.getRemainingPrice()} €
+          </Typography>
         </Box>
       </Box>
 
@@ -83,7 +86,7 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
         Payer
       </Button>
       <PaymentModal
-        price={price}
+        price={cashRegister.currentOrder.getRemainingPrice()}
         open={modalProperties.visible}
         handleClose={handleClose}
       />

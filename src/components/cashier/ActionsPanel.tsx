@@ -1,7 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 import { FC } from "react";
 
+import { useCashRegister } from "../../hooks/useCashRegister";
+
 export const ActionsPanel: FC = () => {
+  const { cashRegister, handleHoldOrder, handleResumeOrder, handleResetOrder } =
+    useCashRegister();
+
   return (
     <Box
       sx={{
@@ -18,6 +23,9 @@ export const ActionsPanel: FC = () => {
           borderColor: "#FF7438",
           ":hover": { backgroundColor: "#FF7438", borderColor: "#FF7438" },
         }}
+        onClick={() =>
+          cashRegister.isHolding ? handleResumeOrder() : handleHoldOrder()
+        }
       >
         <Typography
           variant="h6"
@@ -25,7 +33,7 @@ export const ActionsPanel: FC = () => {
           color="white"
           fontWeight="bold"
         >
-          Mise en attente
+          {cashRegister.isHolding ? "Reprendre" : "Mise en attente"}
         </Typography>
       </Button>
       <Button
@@ -36,6 +44,7 @@ export const ActionsPanel: FC = () => {
           borderColor: "#EE5F5F",
           ":hover": { backgroundColor: "#EE5F5F", borderColor: "#EE5F5F" },
         }}
+        onClick={() => handleResetOrder()}
       >
         <Typography
           variant="h6"

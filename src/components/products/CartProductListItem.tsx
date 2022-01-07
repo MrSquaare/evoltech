@@ -6,22 +6,27 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 
 import { CartProduct } from "../../models/CartProduct";
 
 type Props = {
   productCart: CartProduct;
-  handleOpen?: (productCart: CartProduct) => void;
-  onQuantityChange: (productCart: CartProduct, quantity: number) => void;
+  onQuantityChange?: (productCart: CartProduct, quantity: number) => void;
+  onDelete?: (productCart: CartProduct) => void;
 };
 
 export const CartProductListItem: FC<Props> = ({
   productCart,
-  handleOpen,
   onQuantityChange,
+  onDelete,
 }) => {
+  const [quantity, setQuantity] = useState<number | null>(null);
   const [isQuantityEdited, setIsQuantityEdited] = useState(false);
+  const currentQuantity = useMemo(
+    () => (quantity !== null ? quantity : productCart.quantity),
+    [quantity, productCart]
+  );
 
   return (
     <TableRow>
@@ -39,12 +44,21 @@ export const CartProductListItem: FC<Props> = ({
       >
         {isQuantityEdited ? (
           <TextField
-            value={productCart.quantity}
             variant="outlined"
-            onChange={(e) =>
-              onQuantityChange(productCart, parseInt(e.target.value) || 0)
-            }
-            onBlur={() => setIsQuantityEdited(false)}
+            value={currentQuantity}
+            onChange={(e) => {
+              const parsedValue = parseInt(e.target.value || "0");
+
+              if (isNaN(parsedValue)) return;
+
+              setQuantity(parsedValue);
+            }}
+            onBlur={(e) => {
+              onQuantityChange &&
+                onQuantityChange(productCart, currentQuantity);
+              setQuantity(null);
+              setIsQuantityEdited(false);
+            }}
             autoFocus={true}
             size={"small"}
           />
@@ -63,7 +77,7 @@ export const CartProductListItem: FC<Props> = ({
             backgroundColor: "#4B555FC9",
             ":hover": { backgroundColor: "#4B555FC9" },
           }}
-          onClick={() => handleOpen && handleOpen(productCart)}
+          onClick={() => onDelete && onDelete(productCart)}
         >
           <CloseIcon />
         </Button>

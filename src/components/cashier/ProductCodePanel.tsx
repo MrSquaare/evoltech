@@ -1,6 +1,14 @@
 import { Box, Paper } from "@mui/material";
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
+import { products } from "../../constants/samples";
+import { useCashRegister } from "../../hooks/useCashRegister";
+import { ProductRepository } from "../../repositories/product";
 import ProductDigicode from "./ProductDigicode";
 
 interface OwnProps {}
@@ -8,6 +16,11 @@ interface OwnProps {}
 type Props = OwnProps;
 
 const ProductCodePanel: FunctionComponent<Props> = (props) => {
+  const productRepository = useMemo(
+    () => ProductRepository.getInstance(products),
+    []
+  );
+  const { handleAddProduct } = useCashRegister();
   const [code, setCode] = useState<string>("");
   const handleCase = useCallback((value) => {
     setCode((code) => (code.length < 4 ? code + value : code));
@@ -16,8 +29,18 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
     setCode("");
   }, []);
   const handleSubmit = useCallback(() => {
-    console.log("Code:", code);
-  }, [code]);
+    if (code.length !== 4) return;
+
+    const parsedValue = parseInt(code, 10);
+
+    if (isNaN(parsedValue)) return;
+
+    const product = productRepository.findProduct(parsedValue);
+
+    if (!product) return;
+
+    handleAddProduct(product);
+  }, [handleAddProduct, productRepository, code]);
 
   return (
     <Box sx={{ display: "flex", flexGrow: 1 }}>

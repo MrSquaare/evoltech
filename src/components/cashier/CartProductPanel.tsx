@@ -1,15 +1,28 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 
-import { productCarts } from "../../constants/samples";
+import { useCashRegister } from "../../hooks/useCashRegister";
 import { CartProductList } from "../products/CartProductList";
 
 export const CartProductPanel: FC = () => {
+  const { cashRegister, handleUpdateProductQuantity, handleRemoveProduct } =
+    useCashRegister();
+
+  const productCarts = useMemo(() => {
+    return Array.from(
+      cashRegister.currentOrder.cart.products,
+      ([_, productCard]) => productCard
+    );
+  }, [cashRegister]);
+
   return (
     <CartProductList
       productCarts={productCarts}
       onQuantityChange={(productCart, quantity) =>
-        console.log(productCart + " changed to " + quantity)
+        handleUpdateProductQuantity(productCart.reference, quantity)
       }
+      onDelete={(productCart) => {
+        handleRemoveProduct(productCart.reference);
+      }}
     />
   );
 };
