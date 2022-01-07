@@ -12,14 +12,14 @@ import { CartProduct } from "../../models/CartProduct";
 
 type Props = {
   productCart: CartProduct;
-  handleOpen?: (productCart: CartProduct) => void;
-  onQuantityChange: (productCart: CartProduct, quantity: number) => void;
+  onQuantityChange?: (productCart: CartProduct, quantity: number) => void;
+  onDelete?: (productCart: CartProduct) => void;
 };
 
 export const CartProductListItem: FC<Props> = ({
   productCart,
-  handleOpen,
   onQuantityChange,
+  onDelete,
 }) => {
   const [isQuantityEdited, setIsQuantityEdited] = useState(false);
 
@@ -41,9 +41,13 @@ export const CartProductListItem: FC<Props> = ({
           <TextField
             value={productCart.quantity}
             variant="outlined"
-            onChange={(e) =>
-              onQuantityChange(productCart, parseInt(e.target.value) || 0)
-            }
+            onChange={(e) => {
+              const parsedValue = parseInt(e.target.value);
+
+              if (!parsedValue) return;
+
+              onQuantityChange && onQuantityChange(productCart, parsedValue);
+            }}
             onBlur={() => setIsQuantityEdited(false)}
             autoFocus={true}
             size={"small"}
@@ -63,7 +67,7 @@ export const CartProductListItem: FC<Props> = ({
             backgroundColor: "#4B555FC9",
             ":hover": { backgroundColor: "#4B555FC9" },
           }}
-          onClick={() => handleOpen && handleOpen(productCart)}
+          onClick={() => onDelete && onDelete(productCart)}
         >
           <CloseIcon />
         </Button>

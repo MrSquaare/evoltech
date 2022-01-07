@@ -1,21 +1,24 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 
-import { FSM } from "../fsm/FSM";
-import { CashRegister } from "../models/CashRegister";
+import { CashRegisterContext } from "../contexts/CashRegisterContext";
 import { FSMEvent } from "../models/FSMEvent";
 import { Product } from "../models/Product";
 import { useFSM } from "./useFSM";
 
-export const useCashRegister = (cashRegister: CashRegister, fsm: FSM) => {
-  const { state: fsmState, send } = useFSM(fsm);
+export const useCashRegister = () => {
+  const { fsm, cashRegister, setCashRegister } =
+    useContext(CashRegisterContext);
+  const { send } = useFSM(fsm);
 
   const handleScanProduct = useCallback(
     (product: Product) => {
       send(new FSMEvent(FSMEvent.Type.PRODUCT_SCANNED), () => {
         cashRegister.currentOrder.cart.addProduct(product);
+
+        setCashRegister(cashRegister.clone());
       });
     },
-    [cashRegister, send]
+    [cashRegister, setCashRegister, send]
   );
 
   const handleAddProduct = useCallback(
@@ -49,7 +52,7 @@ export const useCashRegister = (cashRegister: CashRegister, fsm: FSM) => {
   );
 
   return {
-    fsmState,
+    cashRegister,
     handleScanProduct,
     handleAddProduct,
     handleUpdateProductQuantity,

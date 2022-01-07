@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { FSM } from "../fsm/FSM";
 import { FSMEvent } from "../models/FSMEvent";
@@ -12,11 +12,14 @@ type UseFSMReturnType = {
 export const useFSM = (fsm: FSM): UseFSMReturnType => {
   const [state, setState] = useState(fsm.state);
 
-  const send = (event: FSMEvent, callback?: CallableFunction): void => {
-    fsm.run(event, callback);
+  const send = useCallback(
+    (event: FSMEvent, callback?: CallableFunction) => {
+      fsm.run(event, callback);
 
-    setState(fsm.state);
-  };
+      setState(fsm.state);
+    },
+    [fsm]
+  );
 
   return { state, send };
 };

@@ -1,9 +1,20 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 
-import { productCarts } from "../../constants/samples";
+import { CashRegister } from "../../models/CashRegister";
 import { CartProductList } from "../products/CartProductList";
 
-export const CartProductPanel: FC = () => {
+type Props = {
+  cashRegister: CashRegister;
+};
+
+export const CartProductPanel: FC<Props> = ({ cashRegister }) => {
+  const productCarts = useMemo(() => {
+    return Array.from(
+      cashRegister.currentOrder.cart.products,
+      ([_, productCard]) => productCard
+    );
+  }, [cashRegister]);
+
   return (
     <CartProductList
       productCarts={productCarts}
