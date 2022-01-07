@@ -25,9 +25,11 @@ export const useCashRegister = () => {
     (product: Product) => {
       send(new FSMEvent(FSMEvent.Type.PRODUCT_FOUND), () => {
         cashRegister.currentOrder.cart.addProduct(product);
+
+        setCashRegister(cashRegister.clone());
       });
     },
-    [cashRegister, send]
+    [cashRegister, setCashRegister, send]
   );
 
   const handleUpdateProductQuantity = useCallback(
@@ -37,18 +39,22 @@ export const useCashRegister = () => {
           product.id,
           quantity
         );
+
+        setCashRegister(cashRegister.clone());
       });
     },
-    [cashRegister, send]
+    [cashRegister, setCashRegister, send]
   );
 
   const handleRemoveProduct = useCallback(
     (product: Product) => {
       send(new FSMEvent(FSMEvent.Type.QUANTITY_UPDATED), () => {
         cashRegister.currentOrder.cart.removeProduct(product.id);
+
+        setCashRegister(cashRegister.clone());
       });
     },
-    [cashRegister, send]
+    [cashRegister, setCashRegister, send]
   );
 
   return {
