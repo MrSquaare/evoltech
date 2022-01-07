@@ -58,8 +58,12 @@ const PaymentModal: FunctionComponent<Props> = ({
       <Paper
         sx={{
           margin: "auto",
-          width: "800px",
+          width: "1000px",
           padding: "30px",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
         }}
         elevation={3}
       >
@@ -85,6 +89,20 @@ const PaymentModal: FunctionComponent<Props> = ({
             marginTop: "50px",
             marginBottom: "50px",
             justifyContent: "center",
+
+            "&  img": {
+              objectPosition: "center",
+              objectFit: "cover",
+              height: "150px",
+            },
+
+            "& button": {
+              border: "5px solid transparent",
+              margin: "16px",
+            },
+            "& button:hover": {
+              border: "5px solid #FC997C",
+            },
           }}
         >
           <Box>
