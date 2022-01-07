@@ -1,8 +1,18 @@
 import { Order } from "./Order";
 import { Payment } from "./Payment";
 
+const generateOrders = (quantity: number): Order[] => {
+  const orders = [];
+
+  for (let i = 0; i < quantity; i++) {
+    orders.push(new Order());
+  }
+
+  return orders;
+};
+
 export class CashRegister {
-  private _orders: Order[] = new Array(2).fill(new Order());
+  private _orders: Order[] = generateOrders(2);
   private _currentOrderId: number = 0;
   private _pin: number = 0;
 
