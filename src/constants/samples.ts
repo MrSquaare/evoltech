@@ -2,7 +2,7 @@ import { CartProduct } from "../models/CartProduct";
 import { Cashier } from "../models/Cashier";
 import { Product } from "../models/Product";
 
-const generateProducts = (quantity: number): Product[] => {
+export const generateProducts = (quantity: number): Product[] => {
   return Array(quantity)
     .fill(null)
     .map((_, index) => {
