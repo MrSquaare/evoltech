@@ -1,10 +1,13 @@
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import PresentToAllIcon from "@mui/icons-material/PresentToAll";
-import { Box, IconButton, Typography } from "@mui/material";
-import React, { FunctionComponent } from "react";
+import { Box, Button, IconButton, Typography } from "@mui/material";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 
+import { products } from "../../constants/samples";
+import { useCashRegister } from "../../hooks/useCashRegister";
 import { Cashier } from "../../models/Cashier";
+import { ProductRepository } from "../../repositories/product";
 import { TopBarClock } from "./TopBarClock";
 
 type Props = {
@@ -18,6 +21,16 @@ const TopBar: FunctionComponent<Props> = ({
   onOpenCashier,
   onDisconnect,
 }) => {
+  const productRepository = useMemo(
+    () => ProductRepository.getInstance(products),
+    []
+  );
+  const { handleScanProduct } = useCashRegister();
+
+  const simulateScan = useCallback(() => {
+    handleScanProduct(productRepository.scanProduct());
+  }, [handleScanProduct, productRepository]);
+
   return (
     <Box
       sx={{
@@ -41,6 +54,21 @@ const TopBar: FunctionComponent<Props> = ({
           alignItems: "center",
         }}
       >
+        <Button
+          color={"primary"}
+          variant={"contained"}
+          sx={{
+            width: "30px",
+            height: "30px",
+            fontSize: 10,
+            backgroundColor: "black",
+            marginRight: "30px",
+          }}
+          onClick={() => simulateScan()}
+        >
+          Scan
+        </Button>
+
         <Box sx={{ marginRight: "0.5rem" }}>
           <TopBarClock />
         </Box>

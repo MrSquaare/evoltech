@@ -48,7 +48,6 @@ export const CartProductListItem: FC<Props> = ({
             value={currentQuantity}
             onChange={(e) => {
               const parsedValue = parseInt(e.target.value || "0");
-              console.log(parsedValue);
 
               if (isNaN(parsedValue)) return;
 

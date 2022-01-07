@@ -1,6 +1,7 @@
 import { useCallback, useContext } from "react";
 
 import { CashRegisterContext } from "../contexts/CashRegisterContext";
+import { Payment } from "../models/Payment";
 import { Product } from "../models/Product";
 
 export const useCashRegister = () => {
@@ -66,6 +67,43 @@ export const useCashRegister = () => {
     [setCashRegister]
   );
 
+  const handleHoldOrder = useCallback(() => {
+    setCashRegister((cashRegister) => {
+      cashRegister.holdOrder();
+
+      return cashRegister.clone();
+    });
+  }, [setCashRegister]);
+
+  const handleResumeOrder = useCallback(() => {
+    setCashRegister((cashRegister) => {
+      cashRegister.resumeOrder();
+
+      return cashRegister.clone();
+    });
+  }, [setCashRegister]);
+
+  const handleResetOrder = useCallback(() => {
+    setCashRegister((cashRegister) => {
+      cashRegister.resetOrder();
+
+      return cashRegister.clone();
+    });
+  }, [setCashRegister]);
+
+  const handlePayOrder = useCallback(
+    (payment: Payment) => {
+      setCashRegister((cashRegister) => {
+        if (cashRegister.pay(payment)) {
+          cashRegister.resetOrder();
+        }
+
+        return cashRegister.clone();
+      });
+    },
+    [setCashRegister]
+  );
+
   return {
     cashRegister,
     handleSetProductCode,
@@ -73,5 +111,9 @@ export const useCashRegister = () => {
     handleAddProduct,
     handleUpdateProductQuantity,
     handleRemoveProduct,
+    handleHoldOrder,
+    handleResumeOrder,
+    handleResetOrder,
+    handlePayOrder,
   };
 };
