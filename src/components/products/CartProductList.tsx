@@ -41,12 +41,15 @@ export const CartProductList: FC<Props> = ({
   };
 
   return (
-    <Paper sx={{ height: "720px", overflowX: "auto" }}>
-      <TableContainer>
+    <Paper sx={{ flexGrow: 1, height: 0 }}>
+      <TableContainer sx={{ height: "100%" }}>
         <Table>
           <TableHead
             sx={{
               backgroundColor: "#4B555FC9",
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
             }}
           >
             <TableRow>
@@ -73,7 +76,7 @@ export const CartProductList: FC<Props> = ({
               <TableCell />
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ overflowY: "auto" }}>
             {productCarts.map((productCart) => {
               return (
                 <CartProductListItem
