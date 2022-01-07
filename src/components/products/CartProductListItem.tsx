@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 
 import { CartProduct } from "../../models/CartProduct";
 
@@ -21,8 +21,12 @@ export const CartProductListItem: FC<Props> = ({
   onQuantityChange,
   onDelete,
 }) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState<number | null>(null);
   const [isQuantityEdited, setIsQuantityEdited] = useState(false);
+  const currentQuantity = useMemo(
+    () => (quantity !== null ? quantity : productCart.quantity),
+    [quantity, productCart]
+  );
 
   return (
     <TableRow>
@@ -41,17 +45,19 @@ export const CartProductListItem: FC<Props> = ({
         {isQuantityEdited ? (
           <TextField
             variant="outlined"
-            value={quantity}
+            value={currentQuantity}
             onChange={(e) => {
               const parsedValue = parseInt(e.target.value || "0");
+              console.log(parsedValue);
 
-              if (!parsedValue) return;
+              if (isNaN(parsedValue)) return;
 
               setQuantity(parsedValue);
             }}
             onBlur={(e) => {
-              onQuantityChange && onQuantityChange(productCart, quantity);
-              setQuantity(0);
+              onQuantityChange &&
+                onQuantityChange(productCart, currentQuantity);
+              setQuantity(null);
               setIsQuantityEdited(false);
             }}
             autoFocus={true}
