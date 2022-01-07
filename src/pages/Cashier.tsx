@@ -7,6 +7,7 @@ import { CartProductPanel } from "../components/cashier/CartProductPanel";
 import CashierOpenModal from "../components/cashier/CashierOpenModal";
 import PayementPanel from "../components/cashier/PayementPanel";
 import ProductCodePanel from "../components/cashier/ProductCodePanel";
+import ProductModal from "../components/cashier/ProductModal";
 import TopBar from "../components/layout/TopBar";
 import { cashier } from "../constants/samples";
 import { CashRegisterProvider } from "../contexts/CashRegisterContext";
@@ -18,11 +19,18 @@ import { FSMState } from "../models/FSMState";
 const CashierPage: FC = () => {
   const navigate = useNavigate();
   const [isCashierOpen, setCashierOpen] = useState(false);
+  const [isProductOpen, setProductOpen] = useState(false);
   const handleOpenCashier = useCallback(() => {
     setCashierOpen(true);
   }, []);
   const handleCloseCashier = useCallback(() => {
     setCashierOpen(false);
+  }, []);
+  const handleOpenProduct = useCallback(() => {
+    setProductOpen(true);
+  }, []);
+  const handleCloseProduct = useCallback(() => {
+    setProductOpen(false);
   }, []);
   const handleDisconnect = useCallback(() => {
     navigate("/login");
@@ -81,7 +89,7 @@ const CashierPage: FC = () => {
                 flexGrow: 1,
               }}
             >
-              <ProductCodePanel />
+              <ProductCodePanel  handleOpenProduct={handleOpenProduct}/>
             </Box>
           </Box>
           <Box
@@ -100,6 +108,7 @@ const CashierPage: FC = () => {
         </Container>
       </Box>
       <CashierOpenModal open={isCashierOpen} handleClose={handleCloseCashier} />
+      <ProductModal visible={isProductOpen} handleClose={handleCloseProduct} />
     </Box>
   );
 };

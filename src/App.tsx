@@ -17,7 +17,6 @@ function App() {
 
         {/* Dev Routes */}
         <Route path="/dev/fsm" element={<FSMPage />} />
-        <Route path="/dev/pmc" element={<ProductModal />} />
       </Routes>
     </BrowserRouter>
   );

@@ -3,16 +3,15 @@ import React, { FunctionComponent, useState } from "react";
 
 import ProductList from "../products/ProductList";
 
-interface OwnProps {}
+interface OwnProps {
+  visible: boolean;
+  handleClose: () => void;
+}
 
 type Props = OwnProps;
 
 const ProductModal: FunctionComponent<Props> = (props) => {
-  const [visible, setVisible] = useState(true);
-
-  const handleClose = () => {
-    setVisible(false);
-  };
+  const { visible, handleClose } = props;
 
   return (
     <Modal open={visible} onClose={handleClose}>
@@ -25,12 +24,12 @@ const ProductModal: FunctionComponent<Props> = (props) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%,-50%)",
-          textAlign: "center",
+          textAlign: "center"
         }}
       >
         <Box
           sx={{
-            display: "flex",
+            display: "flex"
           }}
         >
           <Box sx={{ marginRight: "20px" }}>
@@ -43,14 +42,14 @@ const ProductModal: FunctionComponent<Props> = (props) => {
                   sx={{
                     backgroundColor: "#607790",
                     ":hover": {
-                      backgroundColor: "#607790",
+                      backgroundColor: "#607790"
                     },
                     color: "white",
                     fontFamily: "poppins",
                     fontSize: "18px",
                     width: "100%",
                     textTransform: "none",
-                    justifyContent: "flex-start",
+                    justifyContent: "flex-start"
                   }}
                 >
                   Produits rapides
@@ -64,14 +63,14 @@ const ProductModal: FunctionComponent<Props> = (props) => {
                   sx={{
                     backgroundColor: "#607790",
                     ":hover": {
-                      backgroundColor: "#607790",
+                      backgroundColor: "#607790"
                     },
                     color: "white",
                     fontFamily: "poppins",
                     fontSize: "18px",
                     width: "100%",
                     textTransform: "none",
-                    justifyContent: "flex-start",
+                    justifyContent: "flex-start"
                   }}
                 >
                   Jardin
@@ -85,14 +84,14 @@ const ProductModal: FunctionComponent<Props> = (props) => {
                   sx={{
                     backgroundColor: "#607790",
                     ":hover": {
-                      backgroundColor: "#607790",
+                      backgroundColor: "#607790"
                     },
                     color: "white",
                     fontFamily: "poppins",
                     fontSize: "18px",
                     width: "100%",
                     textTransform: "none",
-                    justifyContent: "flex-start",
+                    justifyContent: "flex-start"
                   }}
                 >
                   Outillage
@@ -107,18 +106,18 @@ const ProductModal: FunctionComponent<Props> = (props) => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: "24px",
+            marginTop: "24px"
           }}
         >
           <Button
             sx={{
               backgroundColor: "#607790",
               ":hover": {
-                backgroundColor: "#607790",
+                backgroundColor: "#607790"
               },
               color: "white",
               fontFamily: "poppins",
-              fontSize: "18px",
+              fontSize: "18px"
             }}
             onClick={handleClose}
           >
@@ -128,11 +127,11 @@ const ProductModal: FunctionComponent<Props> = (props) => {
             sx={{
               backgroundColor: "#FC997C",
               ":hover": {
-                backgroundColor: "#FC997C",
+                backgroundColor: "#FC997C"
               },
               color: "white",
               fontFamily: "poppins",
-              fontSize: "18px",
+              fontSize: "18px"
             }}
             onClick={() => {
               handleClose();
