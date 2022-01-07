@@ -31,7 +31,7 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
         borderRadius: "5px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-end",
+        alignItems: "center",
       }}
     >
       <Box
@@ -80,6 +80,7 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
           height: 71,
           fontSize: 36,
           backgroundColor: "#2CA849",
+          textTransform: "capitalize",
         }}
         onClick={() => handleOpen()}
       >
