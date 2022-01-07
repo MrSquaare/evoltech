@@ -1,6 +1,7 @@
 import { useCallback, useContext } from "react";
 
 import { CashRegisterContext } from "../contexts/CashRegisterContext";
+import { Payment } from "../models/Payment";
 import { Product } from "../models/Product";
 
 export const useCashRegister = () => {
@@ -90,6 +91,19 @@ export const useCashRegister = () => {
     });
   }, [setCashRegister]);
 
+  const handlePayOrder = useCallback(
+    (payment: Payment) => {
+      setCashRegister((cashRegister) => {
+        if (cashRegister.pay(payment)) {
+          cashRegister.resetOrder();
+        }
+
+        return cashRegister.clone();
+      });
+    },
+    [setCashRegister]
+  );
+
   return {
     cashRegister,
     handleSetProductCode,
@@ -100,5 +114,6 @@ export const useCashRegister = () => {
     handleHoldOrder,
     handleResumeOrder,
     handleResetOrder,
+    handlePayOrder,
   };
 };
