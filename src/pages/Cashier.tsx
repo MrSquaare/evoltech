@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ActionsPanel } from "../components/cashier/ActionsPanel";
@@ -8,9 +8,22 @@ import CashierOpenModal from "../components/cashier/CashierOpenModal";
 import PayementPanel from "../components/cashier/PayementPanel";
 import ProductCodePanel from "../components/cashier/ProductCodePanel";
 import TopBar from "../components/layout/TopBar";
-import { cashier } from "../constants/samples";
+import { cashier, products } from "../constants/samples";
+import { CashRegisterProvider } from "../contexts/CashRegisterContext";
+import { FSMProvider } from "../contexts/FSMContext";
+import { FSM } from "../fsm/FSM";
+import { useCashRegister } from "../hooks/useCashRegister";
+import { CashRegister } from "../models/CashRegister";
+import { FSMState } from "../models/FSMState";
+import { ProductRepository } from "../repositories/product";
 
-const CashierPage: FC = (props) => {
+const CashierPage: FC = () => {
+  const productRepository = useMemo(
+    () => ProductRepository.getInstance(products),
+    []
+  );
+  const { handleScanProduct } = useCashRegister();
+
   const navigate = useNavigate();
   const [isCashierOpen, setCashierOpen] = useState(false);
   const handleOpenCashier = useCallback(() => {
@@ -23,6 +36,10 @@ const CashierPage: FC = (props) => {
     navigate("/login");
   }, [navigate]);
 
+  useEffect(() => {
+    handleScanProduct(productRepository.scanProduct());
+  }, [handleScanProduct, productRepository]);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <TopBar
@@ -33,7 +50,7 @@ const CashierPage: FC = (props) => {
       <Box sx={{ display: "flex", flexGrow: 1 }}>
         <Box
           sx={{
-            flexGrow: 1,
+            flex: 1,
             display: "flex",
             flexDirection: "column",
             padding: "1rem",
@@ -47,6 +64,7 @@ const CashierPage: FC = (props) => {
         <Container
           maxWidth={"sm"}
           sx={{
+            flex: 1,
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
@@ -98,4 +116,21 @@ const CashierPage: FC = (props) => {
   );
 };
 
-export default CashierPage;
+const CashierPageWithProviders = () => {
+  const initState = useMemo(
+    () => FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN),
+    []
+  );
+  const fsm = useMemo(() => new FSM(initState), [initState]);
+  const cashRegister = useMemo(() => new CashRegister(), []);
+
+  return (
+    <FSMProvider fsm={fsm}>
+      <CashRegisterProvider cashRegister={cashRegister}>
+        <CashierPage />
+      </CashRegisterProvider>
+    </FSMProvider>
+  );
+};
+
+export default CashierPageWithProviders;

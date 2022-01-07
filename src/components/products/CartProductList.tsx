@@ -16,8 +16,8 @@ import { CartProductListItem } from "./CartProductListItem";
 
 type Props = {
   productCarts: CartProduct[];
+  onQuantityChange?: (productCart: CartProduct, quantity: number) => void;
   onDelete?: (productCart: CartProduct) => void;
-  onQuantityChange: (productCart: CartProduct, quantity: number) => void;
 };
 
 export const CartProductList: FC<Props> = ({
@@ -33,7 +33,7 @@ export const CartProductList: FC<Props> = ({
     cartProduct: undefined,
   });
 
-  const handleOpen = (cartProduct: CartProduct) => {
+  const handleDelete = (cartProduct: CartProduct) => {
     setModalProperties({ visible: true, cartProduct });
   };
   const handleClose = () => {
@@ -79,8 +79,8 @@ export const CartProductList: FC<Props> = ({
                 <CartProductListItem
                   key={productCart.reference.id}
                   productCart={productCart}
-                  handleOpen={handleOpen}
                   onQuantityChange={onQuantityChange}
+                  onDelete={handleDelete}
                 />
               );
             })}

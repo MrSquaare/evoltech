@@ -2,8 +2,9 @@ import { Order } from "./Order";
 import { Payment } from "./Payment";
 
 export class CashRegister {
-  private _orders: Order[] = new Array<Order>(2);
+  private _orders: Order[] = new Array(2).fill(new Order());
   private _currentOrderId: number = 0;
+  private _pin: number = 0;
 
   get currentOrder() {
     return this._orders[this._currentOrderId];
@@ -29,5 +30,21 @@ export class CashRegister {
     }
 
     return false;
+  }
+
+  get pin() {
+    return this._pin;
+  }
+
+  set pin(value: number) {
+    this._pin = value;
+  }
+
+  clone(): CashRegister {
+    const clonedObj = Object.assign({}, this);
+
+    Object.setPrototypeOf(clonedObj, Object.getPrototypeOf(this));
+
+    return clonedObj;
   }
 }
