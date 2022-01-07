@@ -27,9 +27,9 @@ const generateProductCarts = (
     });
 };
 
-export const products = generateProducts(8);
+export const products = generateProducts(20);
 
-export const productCarts = generateProductCarts(products, 8);
+export const productCarts = generateProductCarts(products, 20);
 
 export const cashier = new Cashier("John", "Doe");
 

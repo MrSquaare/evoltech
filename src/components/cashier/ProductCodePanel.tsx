@@ -3,7 +3,7 @@ import React, {
   FunctionComponent,
   useCallback,
   useMemo,
-  useState
+  useState,
 } from "react";
 
 import { products } from "../../constants/samples";
@@ -53,7 +53,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
         <Box>
@@ -66,7 +66,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
               alignItems: "center",
               height: "50px",
               margin: "10px",
-              flex: 1
+              flex: 1,
             }}
           >
             <span>{code}</span>

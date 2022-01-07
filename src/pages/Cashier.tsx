@@ -52,7 +52,14 @@ const CashierPage: FC = () => {
             padding: "1rem",
           }}
         >
-          <Box sx={{ flexGrow: 1, marginBottom: "1rem" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              flexGrow: 1,
+              marginBottom: "1rem",
+            }}
+          >
             <CartProductPanel />
           </Box>
           <ActionsPanel />
@@ -89,7 +96,7 @@ const CashierPage: FC = () => {
                 flexGrow: 1,
               }}
             >
-              <ProductCodePanel  handleOpenProduct={handleOpenProduct}/>
+              <ProductCodePanel handleOpenProduct={handleOpenProduct} />
             </Box>
           </Box>
           <Box
