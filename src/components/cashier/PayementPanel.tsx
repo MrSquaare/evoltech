@@ -67,7 +67,7 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
           }}
         >
           <Typography fontSize={32}>
-            {String(cashRegister.currentOrder.cart.getTotalPrice())} €
+            {cashRegister.currentOrder.getRemainingPrice()} €
           </Typography>
         </Box>
       </Box>
@@ -86,7 +86,7 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
         Payer
       </Button>
       <PaymentModal
-        price={String(cashRegister.currentOrder.cart.getTotalPrice())}
+        price={cashRegister.currentOrder.getRemainingPrice()}
         open={modalProperties.visible}
         handleClose={handleClose}
       />

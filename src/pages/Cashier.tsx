@@ -18,12 +18,6 @@ import { FSMState } from "../models/FSMState";
 import { ProductRepository } from "../repositories/product";
 
 const CashierPage: FC = () => {
-  const productRepository = useMemo(
-    () => ProductRepository.getInstance(products),
-    []
-  );
-  const { handleScanProduct } = useCashRegister();
-
   const navigate = useNavigate();
   const [isCashierOpen, setCashierOpen] = useState(false);
   const handleOpenCashier = useCallback(() => {
@@ -35,10 +29,6 @@ const CashierPage: FC = () => {
   const handleDisconnect = useCallback(() => {
     navigate("/login");
   }, [navigate]);
-
-  useEffect(() => {
-    handleScanProduct(productRepository.scanProduct());
-  }, [handleScanProduct, productRepository]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>

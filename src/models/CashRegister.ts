@@ -10,12 +10,20 @@ export class CashRegister {
     return this._orders[this._currentOrderId];
   }
 
-  pauseOrder() {
+  get isHolding() {
+    return this._currentOrderId === 1;
+  }
+
+  holdOrder() {
     this._currentOrderId = 1;
   }
 
   resumeOrder() {
     this._currentOrderId = 0;
+  }
+
+  resetOrder() {
+    this._orders[this._currentOrderId] = new Order();
   }
 
   pay(payment: Payment): boolean {

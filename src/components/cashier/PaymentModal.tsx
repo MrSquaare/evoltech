@@ -1,20 +1,34 @@
 import { Box, Button, Modal, Paper, Typography } from "@mui/material";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 
 import cash from "../../asset/cash.png";
 import cb from "../../asset/cb.png";
-import chec from "../../asset/chec.png";
+import check from "../../asset/chec.png";
+import { useCashRegister } from "../../hooks/useCashRegister";
+import { Payment } from "../../models/Payment";
 
 interface OwnProps {
-  price: string;
+  price: number;
   open: boolean;
   handleClose: () => void;
 }
 
 type Props = OwnProps;
 
-const PaymentModal: FunctionComponent<Props> = (props) => {
-  const { price, open, handleClose } = props;
+const PaymentModal: FunctionComponent<Props> = ({
+  price,
+  open,
+  handleClose,
+}) => {
+  const { handlePayOrder } = useCashRegister();
+  const [paymentType, setPaymentType] = useState("cb");
+
+  const handlePay = useCallback(() => {
+    const payment = new Payment(price);
+
+    handlePayOrder(payment);
+  }, [price, handlePayOrder]);
+
   return (
     <Modal
       open={open}
@@ -55,30 +69,18 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
           }}
         >
           <Box>
-            <Button
-              onClick={() => {
-                alert("CB sélectionné pour le paiement");
-              }}
-            >
-              <img src={cb} width="200px" height="100px" />
+            <Button onClick={() => setPaymentType("cb")}>
+              <img src={cb} width="200px" height="100px" alt="Carte bleue" />
             </Button>
           </Box>
           <Box>
-            <Button
-              onClick={() => {
-                alert("Espèces  sélectionné pour le paiement");
-              }}
-            >
-              <img src={cash} width="200px" height="100px" />
+            <Button onClick={() => setPaymentType("cash")}>
+              <img src={cash} width="200px" height="100px" alt="Liquide" />
             </Button>
           </Box>
           <Box>
-            <Button
-              onClick={() => {
-                alert("Chèque sélectionné pour le paiement");
-              }}
-            >
-              <img src={chec} width="200px" height="100px" />
+            <Button onClick={() => setPaymentType("check")}>
+              <img src={check} width="200px" height="100px" alt="Chèque" />
             </Button>
           </Box>
         </Box>
@@ -117,12 +119,14 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
+            onClick={() => handleClose()}
           >
             {"<"} Retour
           </Button>
-          <Button
-            size="large"
+          <Paper
             sx={{
+              display: "inline-block",
+              padding: "9px 22px",
               fontFamily: "Poppins, sans-serif",
               fontStyle: "normal",
               fontWeight: 500,
@@ -133,8 +137,8 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               borderRadius: "10px",
             }}
           >
-            à payer : {price}
-          </Button>
+            A PAYER : {price} €
+          </Paper>
           <Button
             variant="contained"
             color="success"
@@ -147,6 +151,7 @@ const PaymentModal: FunctionComponent<Props> = (props) => {
               boxShadow: "0px 4px 18px rgba(0, 0, 0, 0.2)",
               borderRadius: "10px",
             }}
+            onClick={() => handlePay()}
           >
             Payer {">"}
           </Button>
