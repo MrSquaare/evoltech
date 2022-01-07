@@ -6,3 +6,19 @@ body,
   height: 100%;
   background-color: #eeeeee;
 }
+
+
+.styled-scrollbars {
+  /* Foreground, Background */
+  scrollbar-color: #999 #333;
+}
+.styled-scrollbars::-webkit-scrollbar {
+  width: 5px; /* Mostly for vertical scrollbars */
+  height: 10px; /* Mostly for horizontal scrollbars */
+}
+.styled-scrollbars::-webkit-scrollbar-thumb { /* Foreground */
+  background: #607790;
+}
+.styled-scrollbars::-webkit-scrollbar-track { /* Background */
+  background: #EEEEEE;
+}
