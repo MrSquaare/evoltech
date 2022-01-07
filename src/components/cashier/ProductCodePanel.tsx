@@ -3,7 +3,7 @@ import React, {
   FunctionComponent,
   useCallback,
   useMemo,
-  useState,
+  useState
 } from "react";
 
 import { products } from "../../constants/samples";
@@ -11,11 +11,14 @@ import { useCashRegister } from "../../hooks/useCashRegister";
 import { ProductRepository } from "../../repositories/product";
 import ProductDigicode from "./ProductDigicode";
 
-interface OwnProps {}
+interface OwnProps {
+  handleOpenProduct: () => void;
+}
 
 type Props = OwnProps;
 
 const ProductCodePanel: FunctionComponent<Props> = (props) => {
+  const { handleOpenProduct } = props;
   const productRepository = useMemo(
     () => ProductRepository.getInstance(products),
     []
@@ -50,7 +53,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "space-between"
         }}
       >
         <Box>
@@ -63,7 +66,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
               alignItems: "center",
               height: "50px",
               margin: "10px",
-              flex: 1,
+              flex: 1
             }}
           >
             <span>{code}</span>
@@ -82,7 +85,9 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
               margin: "10px",
               color: "white",
               fontSize: "20px",
+              cursor: "pointer",
             }}
+            onClick={handleOpenProduct}
           >
             Produit inconnu
           </Paper>
