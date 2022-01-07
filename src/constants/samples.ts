@@ -32,3 +32,5 @@ export const products = generateProducts(8);
 export const productCarts = generateProductCarts(products, 8);
 
 export const cashier = new Cashier("John", "Doe");
+
+export const codeCashier = "1567";
