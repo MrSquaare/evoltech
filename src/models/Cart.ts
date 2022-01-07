@@ -9,7 +9,8 @@ export class Cart {
   }
 
   addProduct(product: Product): void {
-    const productCart = new CartProduct(product, 1);
+    const quantity = (this._products.get(product.id)?.quantity || 0) + 1;
+    const productCart = new CartProduct(product, quantity);
 
     this._products.set(productCart.reference.id, productCart);
   }

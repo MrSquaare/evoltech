@@ -21,6 +21,7 @@ export const CartProductListItem: FC<Props> = ({
   onQuantityChange,
   onDelete,
 }) => {
+  const [quantity, setQuantity] = useState(0);
   const [isQuantityEdited, setIsQuantityEdited] = useState(false);
 
   return (
@@ -39,16 +40,20 @@ export const CartProductListItem: FC<Props> = ({
       >
         {isQuantityEdited ? (
           <TextField
-            value={productCart.quantity}
             variant="outlined"
+            value={quantity}
             onChange={(e) => {
-              const parsedValue = parseInt(e.target.value);
+              const parsedValue = parseInt(e.target.value || "0");
 
               if (!parsedValue) return;
 
-              onQuantityChange && onQuantityChange(productCart, parsedValue);
+              setQuantity(parsedValue);
             }}
-            onBlur={() => setIsQuantityEdited(false)}
+            onBlur={(e) => {
+              onQuantityChange && onQuantityChange(productCart, quantity);
+              setQuantity(0);
+              setIsQuantityEdited(false);
+            }}
             autoFocus={true}
             size={"small"}
           />

@@ -1,13 +1,12 @@
 import { FC, useMemo } from "react";
 
-import { CashRegister } from "../../models/CashRegister";
+import { useCashRegister } from "../../hooks/useCashRegister";
 import { CartProductList } from "../products/CartProductList";
 
-type Props = {
-  cashRegister: CashRegister;
-};
+export const CartProductPanel: FC = () => {
+  const { cashRegister, handleUpdateProductQuantity, handleRemoveProduct } =
+    useCashRegister();
 
-export const CartProductPanel: FC<Props> = ({ cashRegister }) => {
   const productCarts = useMemo(() => {
     return Array.from(
       cashRegister.currentOrder.cart.products,
@@ -19,8 +18,11 @@ export const CartProductPanel: FC<Props> = ({ cashRegister }) => {
     <CartProductList
       productCarts={productCarts}
       onQuantityChange={(productCart, quantity) =>
-        console.log(productCart + " changed to " + quantity)
+        handleUpdateProductQuantity(productCart.reference, quantity)
       }
+      onDelete={(productCart) => {
+        handleRemoveProduct(productCart.reference);
+      }}
     />
   );
 };

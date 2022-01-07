@@ -1,64 +1,74 @@
 import { useCallback, useContext } from "react";
 
 import { CashRegisterContext } from "../contexts/CashRegisterContext";
-import { FSMEvent } from "../models/FSMEvent";
 import { Product } from "../models/Product";
-import { useFSM } from "./useFSM";
 
 export const useCashRegister = () => {
-  const { fsm, cashRegister, setCashRegister } =
-    useContext(CashRegisterContext);
-  const { send } = useFSM(fsm);
+  const { cashRegister, setCashRegister } = useContext(CashRegisterContext);
+
+  const handleSetProductCode = useCallback(
+    (code: number) => {
+      setCashRegister((cashRegister) => {
+        cashRegister.pin = code;
+
+        return cashRegister.clone();
+      });
+    },
+    [setCashRegister]
+  );
 
   const handleScanProduct = useCallback(
     (product: Product) => {
-      send(new FSMEvent(FSMEvent.Type.PRODUCT_SCANNED), () => {
+      setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.addProduct(product);
+        cashRegister.pin = 0;
 
-        setCashRegister(cashRegister.clone());
+        return cashRegister.clone();
       });
     },
-    [cashRegister, setCashRegister, send]
+    [setCashRegister]
   );
 
   const handleAddProduct = useCallback(
     (product: Product) => {
-      send(new FSMEvent(FSMEvent.Type.PRODUCT_FOUND), () => {
+      setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.addProduct(product);
 
-        setCashRegister(cashRegister.clone());
+        return cashRegister.clone();
       });
     },
-    [cashRegister, setCashRegister, send]
+    [setCashRegister]
   );
 
   const handleUpdateProductQuantity = useCallback(
     (product: Product, quantity: number) => {
-      send(new FSMEvent(FSMEvent.Type.QUANTITY_UPDATED), () => {
+      setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.updateProductQuantity(
           product.id,
           quantity
         );
+        cashRegister.pin = 0;
 
-        setCashRegister(cashRegister.clone());
+        return cashRegister.clone();
       });
     },
-    [cashRegister, setCashRegister, send]
+    [setCashRegister]
   );
 
   const handleRemoveProduct = useCallback(
     (product: Product) => {
-      send(new FSMEvent(FSMEvent.Type.QUANTITY_UPDATED), () => {
+      setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.removeProduct(product.id);
 
-        setCashRegister(cashRegister.clone());
+        return cashRegister.clone();
       });
     },
-    [cashRegister, setCashRegister, send]
+    [setCashRegister]
   );
 
   return {
     cashRegister,
+    handleSetProductCode,
     handleScanProduct,
     handleAddProduct,
     handleUpdateProductQuantity,

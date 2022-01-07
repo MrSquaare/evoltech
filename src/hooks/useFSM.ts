@@ -1,25 +1,33 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext } from "react";
 
+import { FSMContext } from "../contexts/FSMContext";
 import { FSM } from "../fsm/FSM";
 import { FSMEvent } from "../models/FSMEvent";
-import { FSMState } from "../models/FSMState";
 
 type UseFSMReturnType = {
-  state: FSMState;
+  fsm: FSM;
   send: (event: FSMEvent, callback?: CallableFunction) => void;
 };
 
-export const useFSM = (fsm: FSM): UseFSMReturnType => {
-  const [state, setState] = useState(fsm.state);
+export const useFSM = (): UseFSMReturnType => {
+  const { fsm, setFSM } = useContext(FSMContext);
 
   const send = useCallback(
     (event: FSMEvent, callback?: CallableFunction) => {
-      fsm.run(event, callback);
+      setFSM((fsm) => {
+        const prevState = fsm.state;
+        fsm.run(event, callback);
+        const currState = fsm.state;
 
-      setState(fsm.state);
+        if (prevState !== currState) {
+          return fsm.clone();
+        }
+
+        return fsm;
+      });
     },
-    [fsm]
+    [setFSM]
   );
 
-  return { state, send };
+  return { fsm, send };
 };

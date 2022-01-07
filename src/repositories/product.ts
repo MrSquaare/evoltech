@@ -1,14 +1,26 @@
 import { Product } from "../models/Product";
 
 export class ProductRepository {
-  constructor(private _products: Product[]) {}
+  private static instance: ProductRepository;
+
+  public static getInstance(products: Product[]): ProductRepository {
+    if (!ProductRepository.instance) {
+      ProductRepository.instance = new ProductRepository(products);
+    }
+
+    return ProductRepository.instance;
+  }
+
+  private constructor(private _products: Product[]) {}
 
   get products() {
     return this._products;
   }
 
-  findProduct(productCode: string): Product | undefined {
-    return this._products.find((product) => product.code === productCode);
+  findProduct(productCode: number): Product | undefined {
+    return this._products.find(
+      (product) => parseInt(product.code) === productCode
+    );
   }
 
   scanProduct() {

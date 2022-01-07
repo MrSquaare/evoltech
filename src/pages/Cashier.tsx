@@ -10,16 +10,19 @@ import ProductCodePanel from "../components/cashier/ProductCodePanel";
 import TopBar from "../components/layout/TopBar";
 import { cashier, products } from "../constants/samples";
 import { CashRegisterProvider } from "../contexts/CashRegisterContext";
+import { FSMProvider } from "../contexts/FSMContext";
 import { FSM } from "../fsm/FSM";
 import { useCashRegister } from "../hooks/useCashRegister";
 import { CashRegister } from "../models/CashRegister";
 import { FSMState } from "../models/FSMState";
 import { ProductRepository } from "../repositories/product";
 
-const productRepository = new ProductRepository(products);
-
-const CashierPage: FC = (props) => {
-  const { cashRegister, handleScanProduct } = useCashRegister();
+const CashierPage: FC = () => {
+  const productRepository = useMemo(
+    () => ProductRepository.getInstance(products),
+    []
+  );
+  const { handleScanProduct } = useCashRegister();
 
   const navigate = useNavigate();
   const [isCashierOpen, setCashierOpen] = useState(false);
@@ -35,7 +38,7 @@ const CashierPage: FC = (props) => {
 
   useEffect(() => {
     handleScanProduct(productRepository.scanProduct());
-  }, [handleScanProduct]);
+  }, [handleScanProduct, productRepository]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -54,7 +57,7 @@ const CashierPage: FC = (props) => {
           }}
         >
           <Box sx={{ flexGrow: 1, marginBottom: "1rem" }}>
-            <CartProductPanel cashRegister={cashRegister} />
+            <CartProductPanel />
           </Box>
           <ActionsPanel />
         </Box>
@@ -114,16 +117,19 @@ const CashierPage: FC = (props) => {
 };
 
 const CashierPageWithProviders = () => {
-  const fsm = useMemo(
-    () => new FSM(FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN)),
+  const initState = useMemo(
+    () => FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN),
     []
   );
+  const fsm = useMemo(() => new FSM(initState), [initState]);
   const cashRegister = useMemo(() => new CashRegister(), []);
 
   return (
-    <CashRegisterProvider fsm={fsm} cashRegister={cashRegister}>
-      <CashierPage />
-    </CashRegisterProvider>
+    <FSMProvider fsm={fsm}>
+      <CashRegisterProvider cashRegister={cashRegister}>
+        <CashierPage />
+      </CashRegisterProvider>
+    </FSMProvider>
   );
 };
 

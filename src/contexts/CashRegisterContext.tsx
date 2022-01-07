@@ -1,12 +1,10 @@
-import { createContext, FC, useState } from "react";
+import { createContext, Dispatch, FC, SetStateAction, useState } from "react";
 
-import { FSM } from "../fsm/FSM";
 import { CashRegister } from "../models/CashRegister";
 
 type CashRegisterContextValue = {
-  fsm: FSM;
   cashRegister: CashRegister;
-  setCashRegister: (cashRegister: CashRegister) => void;
+  setCashRegister: Dispatch<SetStateAction<CashRegister>>;
 };
 
 export const CashRegisterContext = createContext<CashRegisterContextValue>(
@@ -14,20 +12,18 @@ export const CashRegisterContext = createContext<CashRegisterContextValue>(
 );
 
 type CashRegisterProviderProps = {
-  fsm: FSM;
   cashRegister: CashRegister;
 };
 
 export const CashRegisterProvider: FC<CashRegisterProviderProps> = ({
   children,
-  fsm,
   cashRegister,
 }) => {
   const [state, setState] = useState(cashRegister);
 
   return (
     <CashRegisterContext.Provider
-      value={{ fsm, cashRegister: state, setCashRegister: setState }}
+      value={{ cashRegister: state, setCashRegister: setState }}
     >
       {children}
     </CashRegisterContext.Provider>
