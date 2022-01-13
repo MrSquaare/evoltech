@@ -18,10 +18,10 @@ export const CartProductPanel: FC = () => {
     <CartProductList
       productCarts={productCarts}
       onQuantityChange={(productCart, quantity) =>
-        handleUpdateProductQuantity(productCart.reference, quantity)
+        handleUpdateProductQuantity(productCart.reference.id, quantity)
       }
       onDelete={(productCart) => {
-        handleRemoveProduct(productCart.reference);
+        handleRemoveProduct(productCart.reference.id);
       }}
     />
   );

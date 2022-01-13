@@ -1,14 +1,8 @@
 import { Box, Paper } from "@mui/material";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 
-import { products } from "../../constants/samples";
 import { useCashRegister } from "../../hooks/useCashRegister";
-import { ProductRepository } from "../../repositories/product";
+import { useProductRepository } from "../../hooks/useProductRepository";
 import ProductDigicode from "./ProductDigicode";
 
 interface OwnProps {
@@ -19,31 +13,67 @@ type Props = OwnProps;
 
 const ProductCodePanel: FunctionComponent<Props> = (props) => {
   const { handleOpenProduct } = props;
-  const productRepository = useMemo(
-    () => ProductRepository.getInstance(products),
-    []
+  const { findProduct } = useProductRepository();
+  const {
+    cashRegister,
+    handleSetPin,
+    handleSetCurrentProductId,
+    handleAddProduct,
+    handleUpdateProductQuantity,
+  } = useCashRegister();
+
+  const currentProduct = useMemo(() => {
+    if (cashRegister.currentProductId) return;
+    if (cashRegister.pin.length < 4) return;
+
+    const pin = parseInt(cashRegister.pin);
+
+    if (isNaN(pin)) return;
+
+    const product = findProduct(pin);
+
+    return product;
+  }, [cashRegister.currentProductId, cashRegister.pin, findProduct]);
+
+  const handleCase = useCallback(
+    (value) => {
+      if (cashRegister.currentProductId || cashRegister.pin.length < 4) {
+        handleSetPin(cashRegister.pin + value);
+      }
+    },
+    [cashRegister.currentProductId, cashRegister.pin, handleSetPin]
   );
-  const { handleAddProduct } = useCashRegister();
-  const [code, setCode] = useState<string>("");
-  const handleCase = useCallback((value) => {
-    setCode((code) => (code.length < 4 ? code + value : code));
-  }, []);
+
   const handleClear = useCallback(() => {
-    setCode("");
-  }, []);
+    handleSetPin("");
+    handleSetCurrentProductId("");
+  }, [handleSetPin, handleSetCurrentProductId]);
+
+  const handleAddSubmit = useCallback(() => {
+    if (!currentProduct) return;
+
+    handleAddProduct(currentProduct);
+  }, [currentProduct, handleAddProduct]);
+
+  const handleUpdateSubmit = useCallback(() => {
+    const pin = parseInt(cashRegister.pin);
+
+    if (isNaN(pin)) return;
+
+    handleUpdateProductQuantity(cashRegister.currentProductId, pin);
+  }, [
+    cashRegister.currentProductId,
+    cashRegister.pin,
+    handleUpdateProductQuantity,
+  ]);
+
   const handleSubmit = useCallback(() => {
-    if (code.length !== 4) return;
-
-    const parsedValue = parseInt(code, 10);
-
-    if (isNaN(parsedValue)) return;
-
-    const product = productRepository.findProduct(parsedValue);
-
-    if (!product) return;
-
-    handleAddProduct(product);
-  }, [handleAddProduct, productRepository, code]);
+    if (!cashRegister.currentProductId) {
+      handleAddSubmit();
+    } else {
+      handleUpdateSubmit();
+    }
+  }, [cashRegister.currentProductId, handleAddSubmit, handleUpdateSubmit]);
 
   return (
     <Box sx={{ display: "flex", flexGrow: 1 }}>
@@ -69,7 +99,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
               flex: 1,
             }}
           >
-            <span>{code}</span>
+            <span>{cashRegister.pin}</span>
           </Paper>
         </Box>
         <Box>
@@ -89,7 +119,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
             }}
             onClick={handleOpenProduct}
           >
-            Produit inconnu
+            {currentProduct ? currentProduct.name : "Produit inconnu"}
           </Paper>
         </Box>
       </Box>

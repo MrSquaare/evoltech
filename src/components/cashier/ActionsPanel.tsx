@@ -16,12 +16,10 @@ export const ActionsPanel: FC = () => {
       }}
     >
       <Button
-        variant="outlined"
         size="large"
         sx={{
           backgroundColor: "#FF7438",
-          borderColor: "#FF7438",
-          ":hover": { backgroundColor: "#FF7438", borderColor: "#FF7438" },
+          ":hover": { backgroundColor: "#FF7438" },
         }}
         onClick={() =>
           cashRegister.isHolding ? handleResumeOrder() : handleHoldOrder()
@@ -37,12 +35,10 @@ export const ActionsPanel: FC = () => {
         </Typography>
       </Button>
       <Button
-        variant="outlined"
         size="large"
         sx={{
           backgroundColor: "#EE5F5F",
-          borderColor: "#EE5F5F",
-          ":hover": { backgroundColor: "#EE5F5F", borderColor: "#EE5F5F" },
+          ":hover": { backgroundColor: "#EE5F5F" },
         }}
         onClick={() => handleResetOrder()}
       >

@@ -82,7 +82,6 @@ export const CartProductList: FC<Props> = ({
                 <CartProductListItem
                   key={productCart.reference.id}
                   productCart={productCart}
-                  onQuantityChange={onQuantityChange}
                   onDelete={handleDelete}
                 />
               );

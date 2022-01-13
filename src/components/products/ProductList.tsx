@@ -26,7 +26,7 @@ const ProductList: FunctionComponent<Props> = (props) => {
     >
       {products.map((product, index) => {
         return (
-          <Grid item xs={2}>
+          <Grid key={product.id} item xs={2}>
             <ProductListItem product={product} />
           </Grid>
         );

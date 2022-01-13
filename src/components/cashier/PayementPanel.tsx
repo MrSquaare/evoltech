@@ -79,8 +79,9 @@ const PayementPanel: FunctionComponent<Props> = (props) => {
           width: 337,
           height: 71,
           fontSize: 36,
-          backgroundColor: "#2CA849",
           textTransform: "capitalize",
+          backgroundColor: "#2CA849",
+          ":hover": { backgroundColor: "#2CA849" },
         }}
         onClick={() => handleOpen()}
       >

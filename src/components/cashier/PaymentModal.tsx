@@ -13,9 +13,9 @@ import React, {
   useState,
 } from "react";
 
-import cash from "../../asset/cash.png";
-import cb from "../../asset/cb.png";
-import check from "../../asset/chec.png";
+import cashImg from "../../asset/cash.png";
+import cbImg from "../../asset/cb.png";
+import checkImg from "../../asset/check.png";
 import { useCashRegister } from "../../hooks/useCashRegister";
 import { Payment } from "../../models/Payment";
 
@@ -107,17 +107,17 @@ const PaymentModal: FunctionComponent<Props> = ({
         >
           <Box>
             <Button onClick={() => setPaymentType("cb")}>
-              <img src={cb} width="200px" height="100px" alt="Carte bleue" />
+              <img src={cbImg} width="200px" height="100px" alt="Carte bleue" />
             </Button>
           </Box>
           <Box>
             <Button onClick={() => setPaymentType("cash")}>
-              <img src={cash} width="200px" height="100px" alt="Liquide" />
+              <img src={cashImg} width="200px" height="100px" alt="Liquide" />
             </Button>
           </Box>
           <Box>
             <Button onClick={() => setPaymentType("check")}>
-              <img src={check} width="200px" height="100px" alt="Chèque" />
+              <img src={checkImg} width="200px" height="100px" alt="Chèque" />
             </Button>
           </Box>
         </Box>

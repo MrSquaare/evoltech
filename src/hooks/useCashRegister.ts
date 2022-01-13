@@ -7,10 +7,21 @@ import { Product } from "../models/Product";
 export const useCashRegister = () => {
   const { cashRegister, setCashRegister } = useContext(CashRegisterContext);
 
-  const handleSetProductCode = useCallback(
-    (code: number) => {
+  const handleSetPin = useCallback(
+    (code: string) => {
       setCashRegister((cashRegister) => {
         cashRegister.pin = code;
+
+        return cashRegister.clone();
+      });
+    },
+    [setCashRegister]
+  );
+
+  const handleSetCurrentProductId = useCallback(
+    (productId: string) => {
+      setCashRegister((cashRegister) => {
+        cashRegister.currentProductId = productId;
 
         return cashRegister.clone();
       });
@@ -22,7 +33,7 @@ export const useCashRegister = () => {
     (product: Product) => {
       setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.addProduct(product);
-        cashRegister.pin = 0;
+        cashRegister.pin = "";
 
         return cashRegister.clone();
       });
@@ -34,6 +45,7 @@ export const useCashRegister = () => {
     (product: Product) => {
       setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.addProduct(product);
+        cashRegister.pin = "";
 
         return cashRegister.clone();
       });
@@ -42,13 +54,14 @@ export const useCashRegister = () => {
   );
 
   const handleUpdateProductQuantity = useCallback(
-    (product: Product, quantity: number) => {
+    (productId: string, quantity: number) => {
       setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.updateProductQuantity(
-          product.id,
+          productId,
           quantity
         );
-        cashRegister.pin = 0;
+        cashRegister.currentProductId = "";
+        cashRegister.pin = "";
 
         return cashRegister.clone();
       });
@@ -57,9 +70,9 @@ export const useCashRegister = () => {
   );
 
   const handleRemoveProduct = useCallback(
-    (product: Product) => {
+    (productId: string) => {
       setCashRegister((cashRegister) => {
-        cashRegister.currentOrder.cart.removeProduct(product.id);
+        cashRegister.currentOrder.cart.removeProduct(productId);
 
         return cashRegister.clone();
       });
@@ -70,6 +83,8 @@ export const useCashRegister = () => {
   const handleHoldOrder = useCallback(() => {
     setCashRegister((cashRegister) => {
       cashRegister.holdOrder();
+      cashRegister.currentProductId = "";
+      cashRegister.pin = "";
 
       return cashRegister.clone();
     });
@@ -78,6 +93,8 @@ export const useCashRegister = () => {
   const handleResumeOrder = useCallback(() => {
     setCashRegister((cashRegister) => {
       cashRegister.resumeOrder();
+      cashRegister.currentProductId = "";
+      cashRegister.pin = "";
 
       return cashRegister.clone();
     });
@@ -86,6 +103,8 @@ export const useCashRegister = () => {
   const handleResetOrder = useCallback(() => {
     setCashRegister((cashRegister) => {
       cashRegister.resetOrder();
+      cashRegister.currentProductId = "";
+      cashRegister.pin = "";
 
       return cashRegister.clone();
     });
@@ -96,6 +115,8 @@ export const useCashRegister = () => {
       setCashRegister((cashRegister) => {
         if (cashRegister.pay(payment)) {
           cashRegister.resetOrder();
+          cashRegister.currentProductId = "";
+          cashRegister.pin = "";
         }
 
         return cashRegister.clone();
@@ -106,7 +127,8 @@ export const useCashRegister = () => {
 
   return {
     cashRegister,
-    handleSetProductCode,
+    handleSetPin,
+    handleSetCurrentProductId,
     handleScanProduct,
     handleAddProduct,
     handleUpdateProductQuantity,
