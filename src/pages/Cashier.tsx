@@ -128,10 +128,7 @@ const CashierPage: FC = () => {
 };
 
 const CashierPageWithProviders = () => {
-  const productRepository = useMemo(
-    () => ProductRepository.getInstance(products),
-    []
-  );
+  const productRepository = useMemo(() => new ProductRepository(products), []);
   const initState = useMemo(
     () => FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN),
     []
