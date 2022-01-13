@@ -16,6 +16,18 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
   const { findProduct } = useProductRepository();
   const { cashRegister, handleSetPin, handleAddProduct } = useCashRegister();
 
+  const currentProduct = useMemo(() => {
+    if (cashRegister.pin.length < 4) return;
+
+    const pin = parseInt(cashRegister.pin);
+
+    if (isNaN(pin)) return;
+
+    const product = findProduct(pin);
+
+    return product;
+  }, [cashRegister.pin, findProduct]);
+
   const handleCase = useCallback(
     (value) => {
       if (cashRegister.pin.length < 4) {
@@ -30,18 +42,10 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
   }, [handleSetPin]);
 
   const handleSubmit = useCallback(() => {
-    if (cashRegister.pin.length < 4) return;
+    if (!currentProduct) return;
 
-    const pin = parseInt(cashRegister.pin);
-
-    if (isNaN(pin)) return;
-
-    const product = findProduct(pin);
-
-    if (!product) return;
-
-    handleAddProduct(product);
-  }, [cashRegister, findProduct, handleAddProduct]);
+    handleAddProduct(currentProduct);
+  }, [currentProduct, handleAddProduct]);
 
   return (
     <Box sx={{ display: "flex", flexGrow: 1 }}>
@@ -87,7 +91,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
             }}
             onClick={handleOpenProduct}
           >
-            Produit inconnu
+            {currentProduct ? currentProduct.name : "Produit inconnu"}
           </Paper>
         </Box>
       </Box>
