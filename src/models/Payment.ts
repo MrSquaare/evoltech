@@ -4,4 +4,10 @@ export class Payment {
   get price() {
     return this._price;
   }
+
+  toJSON() {
+    return {
+      price: this._price,
+    };
+  }
 }

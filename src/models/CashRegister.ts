@@ -74,4 +74,13 @@ export class CashRegister {
 
     return clonedObj;
   }
+
+  toJSON() {
+    return {
+      orders: this._orders.map((order) => order.toJSON()),
+      currentOrderId: this._currentOrderId,
+      currentProductId: this._currentProductId,
+      pin: this._pin,
+    };
+  }
 }

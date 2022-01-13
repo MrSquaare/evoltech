@@ -25,6 +25,14 @@ export class Order {
   getRemainingPrice(): number {
     return this._cart.getTotalPrice() - this.getTotalPaid();
   }
+
+  toJSON() {
+    return {
+      state: this._state,
+      cart: this._cart.toJSON(),
+      payments: this._payments.map((payment) => payment.toJSON()),
+    };
+  }
 }
 
 export namespace Order {

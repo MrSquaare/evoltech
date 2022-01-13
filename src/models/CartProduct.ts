@@ -18,4 +18,11 @@ export class CartProduct {
   getTotalPrice(): number {
     return this._reference.price * this._quantity;
   }
+
+  toJSON() {
+    return {
+      code: this._reference.code,
+      quantity: this._quantity,
+    };
+  }
 }
