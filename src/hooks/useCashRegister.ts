@@ -18,6 +18,17 @@ export const useCashRegister = () => {
     [setCashRegister]
   );
 
+  const handleSetCurrentProductId = useCallback(
+    (productId: string) => {
+      setCashRegister((cashRegister) => {
+        cashRegister.currentProductId = productId;
+
+        return cashRegister.clone();
+      });
+    },
+    [setCashRegister]
+  );
+
   const handleScanProduct = useCallback(
     (product: Product) => {
       setCashRegister((cashRegister) => {
@@ -43,12 +54,13 @@ export const useCashRegister = () => {
   );
 
   const handleUpdateProductQuantity = useCallback(
-    (product: Product, quantity: number) => {
+    (productId: string, quantity: number) => {
       setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.updateProductQuantity(
-          product.id,
+          productId,
           quantity
         );
+        cashRegister.currentProductId = "";
         cashRegister.pin = "";
 
         return cashRegister.clone();
@@ -58,9 +70,9 @@ export const useCashRegister = () => {
   );
 
   const handleRemoveProduct = useCallback(
-    (product: Product) => {
+    (productId: string) => {
       setCashRegister((cashRegister) => {
-        cashRegister.currentOrder.cart.removeProduct(product.id);
+        cashRegister.currentOrder.cart.removeProduct(productId);
 
         return cashRegister.clone();
       });
@@ -71,6 +83,8 @@ export const useCashRegister = () => {
   const handleHoldOrder = useCallback(() => {
     setCashRegister((cashRegister) => {
       cashRegister.holdOrder();
+      cashRegister.currentProductId = "";
+      cashRegister.pin = "";
 
       return cashRegister.clone();
     });
@@ -79,6 +93,8 @@ export const useCashRegister = () => {
   const handleResumeOrder = useCallback(() => {
     setCashRegister((cashRegister) => {
       cashRegister.resumeOrder();
+      cashRegister.currentProductId = "";
+      cashRegister.pin = "";
 
       return cashRegister.clone();
     });
@@ -87,6 +103,8 @@ export const useCashRegister = () => {
   const handleResetOrder = useCallback(() => {
     setCashRegister((cashRegister) => {
       cashRegister.resetOrder();
+      cashRegister.currentProductId = "";
+      cashRegister.pin = "";
 
       return cashRegister.clone();
     });
@@ -97,6 +115,8 @@ export const useCashRegister = () => {
       setCashRegister((cashRegister) => {
         if (cashRegister.pay(payment)) {
           cashRegister.resetOrder();
+          cashRegister.currentProductId = "";
+          cashRegister.pin = "";
         }
 
         return cashRegister.clone();
@@ -108,6 +128,7 @@ export const useCashRegister = () => {
   return {
     cashRegister,
     handleSetPin,
+    handleSetCurrentProductId,
     handleScanProduct,
     handleAddProduct,
     handleUpdateProductQuantity,

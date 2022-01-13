@@ -14,10 +14,27 @@ const generateOrders = (quantity: number): Order[] => {
 export class CashRegister {
   private _orders: Order[] = generateOrders(2);
   private _currentOrderId: number = 0;
+  private _currentProductId: string = "";
   private _pin: string = "";
 
-  get currentOrder() {
+  get currentOrder(): Order {
     return this._orders[this._currentOrderId];
+  }
+
+  get currentProductId(): string {
+    return this._currentProductId;
+  }
+
+  set currentProductId(value: string) {
+    this._currentProductId = value;
+  }
+
+  get pin(): string {
+    return this._pin;
+  }
+
+  set pin(value: string) {
+    this._pin = value;
   }
 
   get isHolding() {
@@ -48,14 +65,6 @@ export class CashRegister {
     }
 
     return false;
-  }
-
-  get pin(): string {
-    return this._pin;
-  }
-
-  set pin(value: string) {
-    this._pin = value;
   }
 
   clone(): CashRegister {

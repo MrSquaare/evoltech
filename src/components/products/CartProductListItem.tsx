@@ -6,27 +6,27 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FC, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 
+import { useCashRegister } from "../../hooks/useCashRegister";
 import { CartProduct } from "../../models/CartProduct";
 
 type Props = {
   productCart: CartProduct;
-  onQuantityChange?: (productCart: CartProduct, quantity: number) => void;
   onDelete?: (productCart: CartProduct) => void;
 };
 
-export const CartProductListItem: FC<Props> = ({
-  productCart,
-  onQuantityChange,
-  onDelete,
-}) => {
-  const [quantity, setQuantity] = useState<number | null>(null);
-  const [isQuantityEdited, setIsQuantityEdited] = useState(false);
-  const currentQuantity = useMemo(
-    () => (quantity !== null ? quantity : productCart.quantity),
-    [quantity, productCart]
-  );
+export const CartProductListItem: FC<Props> = ({ productCart, onDelete }) => {
+  const { cashRegister, handleSetCurrentProductId } = useCashRegister();
+  const currentQuantity = useMemo(() => {
+    if (!cashRegister.currentProductId) return productCart.quantity;
+
+    const pin = parseInt(cashRegister.pin);
+
+    if (isNaN(pin)) return productCart.quantity;
+
+    return pin;
+  }, [cashRegister, productCart]);
 
   return (
     <TableRow>
@@ -37,29 +37,16 @@ export const CartProductListItem: FC<Props> = ({
         <Typography variant="body1">{productCart.reference.name}</Typography>
       </TableCell>
       <TableCell
-        onClick={() => setIsQuantityEdited(true)}
+        onClick={() => handleSetCurrentProductId(productCart.reference.id)}
         sx={{
           width: "100px",
         }}
       >
-        {isQuantityEdited ? (
+        {cashRegister.currentProductId === productCart.reference.id ? (
           <TextField
             variant="outlined"
             value={currentQuantity}
-            onChange={(e) => {
-              const parsedValue = parseInt(e.target.value || "0");
-
-              if (isNaN(parsedValue)) return;
-
-              setQuantity(parsedValue);
-            }}
-            onBlur={(e) => {
-              onQuantityChange &&
-                onQuantityChange(productCart, currentQuantity);
-              setQuantity(null);
-              setIsQuantityEdited(false);
-            }}
-            autoFocus={true}
+            focused={true}
             size={"small"}
           />
         ) : (

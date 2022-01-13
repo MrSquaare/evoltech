@@ -14,9 +14,16 @@ type Props = OwnProps;
 const ProductCodePanel: FunctionComponent<Props> = (props) => {
   const { handleOpenProduct } = props;
   const { findProduct } = useProductRepository();
-  const { cashRegister, handleSetPin, handleAddProduct } = useCashRegister();
+  const {
+    cashRegister,
+    handleSetPin,
+    handleSetCurrentProductId,
+    handleAddProduct,
+    handleUpdateProductQuantity,
+  } = useCashRegister();
 
   const currentProduct = useMemo(() => {
+    if (cashRegister.currentProductId) return;
     if (cashRegister.pin.length < 4) return;
 
     const pin = parseInt(cashRegister.pin);
@@ -26,26 +33,47 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
     const product = findProduct(pin);
 
     return product;
-  }, [cashRegister.pin, findProduct]);
+  }, [cashRegister.currentProductId, cashRegister.pin, findProduct]);
 
   const handleCase = useCallback(
     (value) => {
-      if (cashRegister.pin.length < 4) {
+      if (cashRegister.currentProductId || cashRegister.pin.length < 4) {
         handleSetPin(cashRegister.pin + value);
       }
     },
-    [cashRegister.pin, handleSetPin]
+    [cashRegister.currentProductId, cashRegister.pin, handleSetPin]
   );
 
   const handleClear = useCallback(() => {
     handleSetPin("");
-  }, [handleSetPin]);
+    handleSetCurrentProductId("");
+  }, [handleSetPin, handleSetCurrentProductId]);
 
-  const handleSubmit = useCallback(() => {
+  const handleAddSubmit = useCallback(() => {
     if (!currentProduct) return;
 
     handleAddProduct(currentProduct);
   }, [currentProduct, handleAddProduct]);
+
+  const handleUpdateSubmit = useCallback(() => {
+    const pin = parseInt(cashRegister.pin);
+
+    if (isNaN(pin)) return;
+
+    handleUpdateProductQuantity(cashRegister.currentProductId, pin);
+  }, [
+    cashRegister.currentProductId,
+    cashRegister.pin,
+    handleUpdateProductQuantity,
+  ]);
+
+  const handleSubmit = useCallback(() => {
+    if (!cashRegister.currentProductId) {
+      handleAddSubmit();
+    } else {
+      handleUpdateSubmit();
+    }
+  }, [cashRegister.currentProductId, handleAddSubmit, handleUpdateSubmit]);
 
   return (
     <Box sx={{ display: "flex", flexGrow: 1 }}>
