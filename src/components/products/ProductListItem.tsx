@@ -6,15 +6,16 @@ import { Product } from "../../models/Product";
 
 interface OwnProps {
   product: Product;
+  handleAddProduct: (product: Product) => void;
 }
 
 type Props = OwnProps;
 
 const ProductListItem: FunctionComponent<Props> = (props) => {
-  const { product } = props;
-
+  const { product, handleAddProduct } = props;
   return (
     <Box
+      onClick={() => handleAddProduct(product)}
       sx={{
         borderRadius: "10px",
         paddingTop: "100%",

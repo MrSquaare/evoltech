@@ -3,7 +3,7 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import PresentToAllIcon from "@mui/icons-material/PresentToAll";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import { Box, IconButton, Typography } from "@mui/material";
-import React, { FunctionComponent, useCallback, useMemo } from "react";
+import React, { FunctionComponent } from "react";
 
 import { Cashier } from "../../models/Cashier";
 import { TopBarClock } from "./TopBarClock";

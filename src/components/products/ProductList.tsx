@@ -2,13 +2,17 @@ import { Grid } from "@mui/material";
 import React, { FunctionComponent, useState } from "react";
 
 import { generateProducts } from "../../constants/samples";
+import { Product } from "../../models/Product";
 import ProductListItem from "./ProductListItem";
 
-interface OwnProps {}
+interface OwnProps {
+  handleAddProduct: (product: Product) => void;
+}
 
 type Props = OwnProps;
 
 const ProductList: FunctionComponent<Props> = (props) => {
+  const { handleAddProduct } = props;
   const [products, setProducts] = useState(generateProducts(32));
 
   return (
@@ -27,7 +31,10 @@ const ProductList: FunctionComponent<Props> = (props) => {
       {products.map((product, index) => {
         return (
           <Grid key={product.id} item xs={2}>
-            <ProductListItem product={product} />
+            <ProductListItem
+              product={product}
+              handleAddProduct={handleAddProduct}
+            />
           </Grid>
         );
       })}

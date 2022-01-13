@@ -1,7 +1,9 @@
 import { Box, Button, List, ListItem, Modal, Paper } from "@mui/material";
 import React, { FunctionComponent, useState } from "react";
 
+import { Product } from "../../models/Product";
 import ProductList from "../products/ProductList";
+import { useCashRegister } from "../../hooks/useCashRegister";
 
 interface OwnProps {
   visible: boolean;
@@ -12,6 +14,11 @@ type Props = OwnProps;
 
 const ProductModal: FunctionComponent<Props> = (props) => {
   const { visible, handleClose } = props;
+  const { handleAddProduct } = useCashRegister();
+  const handleAddProductCallback = (product: Product) => {
+    handleClose();
+    handleAddProduct(product);
+  };
 
   return (
     <Modal open={visible} onClose={handleClose}>
@@ -99,7 +106,7 @@ const ProductModal: FunctionComponent<Props> = (props) => {
               </ListItem>
             </List>
           </Box>
-          <ProductList />
+          <ProductList handleAddProduct={handleAddProductCallback} />
         </Box>
         <Box
           className={"button-container"}
