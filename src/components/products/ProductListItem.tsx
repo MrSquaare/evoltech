@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
+import productImg from "../../asset/product.jpg";
 import { Product } from "../../models/Product";
-import productImg from "./product.jpg";
 
 interface OwnProps {
   product: Product;
@@ -35,7 +35,7 @@ const ProductListItem: FunctionComponent<Props> = (props) => {
       }}
     >
       <div className="content">
-        <img src={productImg} alt={"product image"} />
+        <img src={productImg} alt={`${product.name}`} />
         <Box
           sx={{
             position: "absolute",

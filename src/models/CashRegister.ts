@@ -14,7 +14,7 @@ const generateOrders = (quantity: number): Order[] => {
 export class CashRegister {
   private _orders: Order[] = generateOrders(2);
   private _currentOrderId: number = 0;
-  private _pin: number = 0;
+  private _pin: string = "";
 
   get currentOrder() {
     return this._orders[this._currentOrderId];
@@ -50,11 +50,11 @@ export class CashRegister {
     return false;
   }
 
-  get pin() {
+  get pin(): string {
     return this._pin;
   }
 
-  set pin(value: number) {
+  set pin(value: string) {
     this._pin = value;
   }
 

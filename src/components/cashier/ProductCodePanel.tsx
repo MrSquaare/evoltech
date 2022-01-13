@@ -1,14 +1,8 @@
 import { Box, Paper } from "@mui/material";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { FunctionComponent, useCallback, useMemo } from "react";
 
-import { products } from "../../constants/samples";
 import { useCashRegister } from "../../hooks/useCashRegister";
-import { ProductRepository } from "../../repositories/product";
+import { useProductRepository } from "../../hooks/useProductRepository";
 import ProductDigicode from "./ProductDigicode";
 
 interface OwnProps {
@@ -19,31 +13,35 @@ type Props = OwnProps;
 
 const ProductCodePanel: FunctionComponent<Props> = (props) => {
   const { handleOpenProduct } = props;
-  const productRepository = useMemo(
-    () => ProductRepository.getInstance(products),
-    []
+  const { findProduct } = useProductRepository();
+  const { cashRegister, handleSetPin, handleAddProduct } = useCashRegister();
+
+  const handleCase = useCallback(
+    (value) => {
+      if (cashRegister.pin.length < 4) {
+        handleSetPin(cashRegister.pin + value);
+      }
+    },
+    [cashRegister.pin, handleSetPin]
   );
-  const { handleAddProduct } = useCashRegister();
-  const [code, setCode] = useState<string>("");
-  const handleCase = useCallback((value) => {
-    setCode((code) => (code.length < 4 ? code + value : code));
-  }, []);
+
   const handleClear = useCallback(() => {
-    setCode("");
-  }, []);
+    handleSetPin("");
+  }, [handleSetPin]);
+
   const handleSubmit = useCallback(() => {
-    if (code.length !== 4) return;
+    if (cashRegister.pin.length < 4) return;
 
-    const parsedValue = parseInt(code, 10);
+    const pin = parseInt(cashRegister.pin);
 
-    if (isNaN(parsedValue)) return;
+    if (isNaN(pin)) return;
 
-    const product = productRepository.findProduct(parsedValue);
+    const product = findProduct(pin);
 
     if (!product) return;
 
     handleAddProduct(product);
-  }, [handleAddProduct, productRepository, code]);
+  }, [cashRegister, findProduct, handleAddProduct]);
 
   return (
     <Box sx={{ display: "flex", flexGrow: 1 }}>
@@ -69,7 +67,7 @@ const ProductCodePanel: FunctionComponent<Props> = (props) => {
               flex: 1,
             }}
           >
-            <span>{code}</span>
+            <span>{cashRegister.pin}</span>
           </Paper>
         </Box>
         <Box>

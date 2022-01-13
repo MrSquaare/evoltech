@@ -5,33 +5,22 @@ import QrCodeIcon from "@mui/icons-material/QrCode";
 import { Box, IconButton, Typography } from "@mui/material";
 import React, { FunctionComponent, useCallback, useMemo } from "react";
 
-import { products } from "../../constants/samples";
-import { useCashRegister } from "../../hooks/useCashRegister";
 import { Cashier } from "../../models/Cashier";
-import { ProductRepository } from "../../repositories/product";
 import { TopBarClock } from "./TopBarClock";
 
 type Props = {
   cashier: Cashier;
+  onScan: () => void;
   onOpenCashier: () => void;
   onDisconnect: () => void;
 };
 
 const TopBar: FunctionComponent<Props> = ({
   cashier,
+  onScan,
   onOpenCashier,
   onDisconnect,
 }) => {
-  const productRepository = useMemo(
-    () => ProductRepository.getInstance(products),
-    []
-  );
-  const { handleScanProduct } = useCashRegister();
-
-  const simulateScan = useCallback(() => {
-    handleScanProduct(productRepository.scanProduct());
-  }, [handleScanProduct, productRepository]);
-
   return (
     <Box
       sx={{
@@ -61,7 +50,7 @@ const TopBar: FunctionComponent<Props> = ({
         <IconButton
           size="large"
           sx={{ color: "white" }}
-          onClick={() => simulateScan()}
+          onClick={() => onScan()}
         >
           <QrCodeIcon />
         </IconButton>

@@ -7,8 +7,8 @@ import { Product } from "../models/Product";
 export const useCashRegister = () => {
   const { cashRegister, setCashRegister } = useContext(CashRegisterContext);
 
-  const handleSetProductCode = useCallback(
-    (code: number) => {
+  const handleSetPin = useCallback(
+    (code: string) => {
       setCashRegister((cashRegister) => {
         cashRegister.pin = code;
 
@@ -22,7 +22,7 @@ export const useCashRegister = () => {
     (product: Product) => {
       setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.addProduct(product);
-        cashRegister.pin = 0;
+        cashRegister.pin = "";
 
         return cashRegister.clone();
       });
@@ -34,6 +34,7 @@ export const useCashRegister = () => {
     (product: Product) => {
       setCashRegister((cashRegister) => {
         cashRegister.currentOrder.cart.addProduct(product);
+        cashRegister.pin = "";
 
         return cashRegister.clone();
       });
@@ -48,7 +49,7 @@ export const useCashRegister = () => {
           product.id,
           quantity
         );
-        cashRegister.pin = 0;
+        cashRegister.pin = "";
 
         return cashRegister.clone();
       });
@@ -106,7 +107,7 @@ export const useCashRegister = () => {
 
   return {
     cashRegister,
-    handleSetProductCode,
+    handleSetPin,
     handleScanProduct,
     handleAddProduct,
     handleUpdateProductQuantity,
