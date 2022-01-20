@@ -1,17 +1,7 @@
 import { Product } from "../models/Product";
 
 export class ProductRepository {
-  private static instance: ProductRepository;
-
-  public static getInstance(products: Product[]): ProductRepository {
-    if (!ProductRepository.instance) {
-      ProductRepository.instance = new ProductRepository(products);
-    }
-
-    return ProductRepository.instance;
-  }
-
-  private constructor(private _products: Product[]) {}
+  constructor(private _products: Product[]) {}
 
   get products() {
     return this._products;

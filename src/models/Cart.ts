@@ -38,4 +38,12 @@ export class Cart {
       return total + product.getTotalPrice();
     }, 0);
   }
+
+  toJSON() {
+    const productArr = Array.from(this._products.values());
+
+    return {
+      products: productArr.map((product) => product.toJSON()),
+    };
+  }
 }

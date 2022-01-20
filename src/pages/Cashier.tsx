@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import React, { FC, useCallback, useMemo, useState } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ActionsPanel } from "../components/cashier/ActionsPanel";
@@ -16,8 +16,8 @@ import { ProductRepositoryProvider } from "../contexts/ProductRepositoryContext"
 import { FSM } from "../fsm/FSM";
 import { useCashRegister } from "../hooks/useCashRegister";
 import { useProductRepository } from "../hooks/useProductRepository";
-import { CashRegister } from "../models/CashRegister";
 import { FSMState } from "../models/FSMState";
+import { CashRegisterRepository } from "../repositories/cashRegister";
 import { ProductRepository } from "../repositories/product";
 
 const CashierPage: FC = () => {
@@ -26,7 +26,7 @@ const CashierPage: FC = () => {
   const [isProductOpen, setProductOpen] = useState(false);
 
   const { scanProduct } = useProductRepository();
-  const { handleScanProduct } = useCashRegister();
+  const { cashRegister, handleScanProduct } = useCashRegister();
 
   const handleOpenCashier = useCallback(() => {
     setCashierOpen(true);
@@ -43,6 +43,12 @@ const CashierPage: FC = () => {
   const handleDisconnect = useCallback(() => {
     navigate("/login");
   }, [navigate]);
+
+  useEffect(() => {
+    return () => {
+      CashRegisterRepository.saveCashRegister(cashRegister);
+    };
+  }, [cashRegister]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -128,16 +134,16 @@ const CashierPage: FC = () => {
 };
 
 const CashierPageWithProviders = () => {
-  const productRepository = useMemo(
-    () => ProductRepository.getInstance(products),
-    []
-  );
+  const productRepository = useMemo(() => new ProductRepository(products), []);
   const initState = useMemo(
     () => FSMState.get(FSMState.Type.WAIT_PRODUCT_SCAN),
     []
   );
   const fsm = useMemo(() => new FSM(initState), [initState]);
-  const cashRegister = useMemo(() => new CashRegister(), []);
+  const cashRegister = useMemo(
+    () => CashRegisterRepository.loadCashRegister(productRepository),
+    [productRepository]
+  );
 
   return (
     <ProductRepositoryProvider productRepository={productRepository}>

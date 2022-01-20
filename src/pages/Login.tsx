@@ -29,7 +29,6 @@ const LoginPage: FunctionComponent<Props> = (props) => {
     setCode((code) => (code.length < 4 ? code + value : code));
   }, []);
   const handleSubmit = useCallback(() => {
-    console.log(code, codeCashier);
     if (code === codeCashier) {
       navigate("/");
     } else {
