@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Digicode from "../components/login/Digicode";
 import { codeCashier } from "../constants/samples";
+import { useLogin } from "../hooks/useLogin";
 
 type Props = {};
 
@@ -23,6 +24,15 @@ const getErrorMessage = (code: codeType | undefined): string => {
 
 const LoginPage: FunctionComponent<Props> = (props) => {
   const navigate = useNavigate();
+
+  const { setLogged } = useLogin({
+    guard: (isLogged) => {
+      if (isLogged) {
+        navigate("/");
+      }
+    },
+  });
+
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<{ code: codeType } | undefined>();
   const handleCase = useCallback((value) => {
@@ -30,11 +40,12 @@ const LoginPage: FunctionComponent<Props> = (props) => {
   }, []);
   const handleSubmit = useCallback(() => {
     if (code === codeCashier) {
+      setLogged(true);
       navigate("/");
     } else {
       setError({ code: codeType.USER_NOT_FOUND });
     }
-  }, [code, navigate]);
+  }, [code, setLogged, navigate]);
 
   return (
     <Box
@@ -47,7 +58,9 @@ const LoginPage: FunctionComponent<Props> = (props) => {
     >
       <Container maxWidth={"sm"}>
         {error && (
-          <Alert severity="error">{getErrorMessage(error?.code)}</Alert>
+          <Alert severity="error" sx={{ marginBottom: "1rem" }}>
+            {getErrorMessage(error?.code)}
+          </Alert>
         )}
         <Box className="code-container" sx={{ marginBottom: "2rem" }}>
           <Paper
@@ -67,7 +80,13 @@ const LoginPage: FunctionComponent<Props> = (props) => {
                 color: "#2E4C6D",
               }}
             >
-              {code}
+              {!code ? (
+                <span style={{ color: "#8c8c8c" }}>
+                  The code is {codeCashier}
+                </span>
+              ) : (
+                code
+              )}
             </Box>
             <IconButton>
               <CloseIcon onClick={() => setCode("")} />

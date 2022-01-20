@@ -15,6 +15,7 @@ import { FSMProvider } from "../contexts/FSMContext";
 import { ProductRepositoryProvider } from "../contexts/ProductRepositoryContext";
 import { FSM } from "../fsm/FSM";
 import { useCashRegister } from "../hooks/useCashRegister";
+import { useLogin } from "../hooks/useLogin";
 import { useProductRepository } from "../hooks/useProductRepository";
 import { FSMState } from "../models/FSMState";
 import { CashRegisterRepository } from "../repositories/cashRegister";
@@ -22,6 +23,15 @@ import { ProductRepository } from "../repositories/product";
 
 const CashierPage: FC = () => {
   const navigate = useNavigate();
+
+  const { setLogged } = useLogin({
+    guard: (isLogged) => {
+      if (!isLogged) {
+        navigate("/login");
+      }
+    },
+  });
+
   const [isCashierOpen, setCashierOpen] = useState(false);
   const [isProductOpen, setProductOpen] = useState(false);
 
@@ -41,8 +51,9 @@ const CashierPage: FC = () => {
     setProductOpen(false);
   }, []);
   const handleDisconnect = useCallback(() => {
+    setLogged(false);
     navigate("/login");
-  }, [navigate]);
+  }, [setLogged, navigate]);
 
   useEffect(() => {
     return () => {
