@@ -1,0 +1,42 @@
+{
+  "name": "evoltech-poc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix src/"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.4",
+    "@mui/material": "^5.2.4",
+    "dayjs": "^1.10.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router": "^6.1.1",
+    "react-router-dom": "^6.1.1",
+    "sass": "^1.45.0",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^1.1.5",
+    "prettier": "^2.5.1",
+    "react-scripts": "^5.0.0"
+  }
+}
