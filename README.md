@@ -16,8 +16,7 @@ Cashier software
 ### Prerequisites
 
 1. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-2. [Install Node.js](https://nodejs.org/download/)
-3. [Install yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+2. [Install Node.js](https://nodejs.org/en/download/)
 
 ### Installation
 
