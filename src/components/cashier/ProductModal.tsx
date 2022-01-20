@@ -1,9 +1,9 @@
 import { Box, Button, List, ListItem, Modal, Paper } from "@mui/material";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 
+import { useCashRegister } from "../../hooks/useCashRegister";
 import { Product } from "../../models/Product";
 import ProductList from "../products/ProductList";
-import { useCashRegister } from "../../hooks/useCashRegister";
 
 interface OwnProps {
   visible: boolean;

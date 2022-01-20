@@ -3,7 +3,6 @@ import "./styles/app.scss";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import ProductModal from "./components/cashier/ProductModal";
 import CashierPage from "./pages/Cashier";
 import FSMPage from "./pages/FSM";
 import LoginPage from "./pages/Login";
