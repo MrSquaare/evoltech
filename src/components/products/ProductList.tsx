@@ -13,7 +13,7 @@ type Props = OwnProps;
 
 const ProductList: FunctionComponent<Props> = (props) => {
   const { handleAddProduct } = props;
-  const [products, setProducts] = useState(generateProducts(32));
+  const [products] = useState(generateProducts(32));
 
   return (
     <Grid
